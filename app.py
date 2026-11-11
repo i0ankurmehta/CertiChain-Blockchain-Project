@@ -94,19 +94,40 @@ def load_synthetic_dataset():
 
 
 def audit_chain(chain):
-    """Check block contents and previous-hash links, including downstream trust."""
+    """Verify the genesis block, each block hash, proof of work, and chain links."""
+    if not chain:
+        return False, set()
+
     broken_blocks = set()
     is_valid = True
+
+    # Validate the genesis block as the trust anchor of this local chain.
+    genesis = chain[0]
+    genesis_invalid = (
+        genesis.index != 0
+        or genesis.previous_hash != "0" * 64
+        or genesis.hash != genesis.calculate_hash()
+        or not genesis.hash.startswith("0" * DIFFICULTY)
+    )
+    if genesis_invalid:
+        broken_blocks.add(0)
+        is_valid = False
 
     for index in range(1, len(chain)):
         current = chain[index]
         previous = chain[index - 1]
 
         content_changed = current.hash != current.calculate_hash()
+        proof_of_work_invalid = not current.hash.startswith("0" * DIFFICULTY)
         link_broken = current.previous_hash != previous.hash
         predecessor_compromised = (index - 1) in broken_blocks
 
-        if content_changed or link_broken or predecessor_compromised:
+        if (
+            content_changed
+            or proof_of_work_invalid
+            or link_broken
+            or predecessor_compromised
+        ):
             is_valid = False
             broken_blocks.add(index)
 
