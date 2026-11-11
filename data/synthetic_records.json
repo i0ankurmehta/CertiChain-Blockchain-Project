@@ -1,0 +1,25 @@
+{
+  "dataset_name": "CertiChain Synthetic Demonstration Records",
+  "dataset_version": "1.0",
+  "notice": "Entirely fictional records for demonstration and testing. Not university data.",
+  "records": [
+    {
+      "student_name": "Rohan Sharma",
+      "roll_no": "BCA2401",
+      "course": "BCA Cybersecurity",
+      "cgpa": 8.6
+    },
+    {
+      "student_name": "Priya Patel",
+      "roll_no": "BCA2402",
+      "course": "BCA Data Science",
+      "cgpa": 9.1
+    },
+    {
+      "student_name": "Aman Verma",
+      "roll_no": "BCA2403",
+      "course": "BCA Cloud Tech",
+      "cgpa": 7.4
+    }
+  ]
+}
