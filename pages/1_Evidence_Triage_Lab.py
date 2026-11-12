@@ -27,12 +27,20 @@ b2_path = root / "research" / "EACT_B2_conflict_scenarios.json"
 with scenario_path.open("r", encoding="utf-8") as source:
     study = json.load(source)
 scenarios = study["scenarios"]
-scenario_by_title = {item["title"]: item for item in scenarios}
+
+with b2_path.open("r", encoding="utf-8") as source:
+    b2_cases = json.load(source)["cases"]
+
+# Make both the ten base scenarios and seven conflict scenarios directly selectable.
+selectable_scenarios = scenarios + b2_cases
+scenario_by_label = {
+    f"{item['id']} — {item['title']}": item for item in selectable_scenarios
+}
 
 with st.sidebar:
     st.header("Scenario selection")
-    selected_title = st.selectbox("Choose a fictional case", list(scenario_by_title))
-    selected = scenario_by_title[selected_title]
+    selected_label = st.selectbox("Choose a fictional case", list(scenario_by_label))
+    selected = scenario_by_label[selected_label]
     st.caption(selected["id"])
     st.divider()
     st.caption("Adjust evidence states to explore how the rules respond. Changes are temporary and do not edit the JSON fixture.")
@@ -122,9 +130,6 @@ st.caption(v2["provenance_note"])
 
 st.divider()
 st.subheader("EACT-v2 results across the seven conflict scenarios")
-
-with b2_path.open("r", encoding="utf-8") as source:
-    b2_cases = json.load(source)["cases"]
 
 b2_rows = []
 for item in b2_cases:
