@@ -1,0 +1,11 @@
+scenario_id,baseline_hash_only,eact_expected_disposition,observed_disposition,correct,notes
+EACT-01,valid,verified_against_trusted_source,,,
+EACT-02,invalid,altered,,,
+EACT-03,valid,issuer_unverified,,,
+EACT-04,not_applicable,inconclusive_manual_review,,,
+EACT-05,valid,inconclusive_source_unavailable,,,
+EACT-06,valid,revoked,,,
+EACT-07,valid,subject_mismatch,,,
+EACT-08,not_applicable,pending_consent,,,
+EACT-09,valid,expired,,,
+EACT-10,valid,issuer_and_integrity_verified_status_unknown,,,

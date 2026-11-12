@@ -1,0 +1,133 @@
+{
+  "study": "EACT-v1",
+  "notice": "All people, issuers, identifiers, credentials and statuses below are fictional fixtures for controlled testing. These are not real university or employer records.",
+  "dimensions": [
+    "integrity",
+    "issuer_identity",
+    "credential_status",
+    "subject_match",
+    "source_state"
+  ],
+  "scenarios": [
+    {
+      "id": "EACT-01",
+      "title": "Official registry match",
+      "integrity": "match",
+      "issuer_identity": "authenticated",
+      "credential_status": "active",
+      "subject_match": "match",
+      "source_state": "available_consent_granted",
+      "expected_disposition": "verified_against_trusted_source",
+      "baseline_hash_only": "valid",
+      "risk_note": "Positive control; all evidence dimensions are satisfied."
+    },
+    {
+      "id": "EACT-02",
+      "title": "Credential content modified",
+      "integrity": "mismatch",
+      "issuer_identity": "authenticated",
+      "credential_status": "active",
+      "subject_match": "match",
+      "source_state": "available",
+      "expected_disposition": "altered",
+      "baseline_hash_only": "invalid",
+      "risk_note": "Integrity mismatch should be treated as an alteration signal."
+    },
+    {
+      "id": "EACT-03",
+      "title": "Hash matches but issuer is unknown",
+      "integrity": "match",
+      "issuer_identity": "unknown",
+      "credential_status": "unknown",
+      "subject_match": "not_checked",
+      "source_state": "offline_document_only",
+      "expected_disposition": "issuer_unverified",
+      "baseline_hash_only": "valid",
+      "risk_note": "Demonstrates false assurance from equating hash match with authenticity."
+    },
+    {
+      "id": "EACT-04",
+      "title": "No record returned by registry",
+      "integrity": "not_checked",
+      "issuer_identity": "unknown",
+      "credential_status": "unknown",
+      "subject_match": "not_checked",
+      "source_state": "no_record_found",
+      "expected_disposition": "inconclusive_manual_review",
+      "baseline_hash_only": "not_applicable",
+      "risk_note": "Absence from a particular repository is not proof of forgery."
+    },
+    {
+      "id": "EACT-05",
+      "title": "Verification source unavailable",
+      "integrity": "match",
+      "issuer_identity": "unknown",
+      "credential_status": "unknown",
+      "subject_match": "match",
+      "source_state": "service_unavailable",
+      "expected_disposition": "inconclusive_source_unavailable",
+      "baseline_hash_only": "valid",
+      "risk_note": "A hash match cannot compensate for unavailable issuer/status evidence."
+    },
+    {
+      "id": "EACT-06",
+      "title": "Credential revoked",
+      "integrity": "match",
+      "issuer_identity": "authenticated",
+      "credential_status": "revoked",
+      "subject_match": "match",
+      "source_state": "status_source_available",
+      "expected_disposition": "revoked",
+      "baseline_hash_only": "valid",
+      "risk_note": "Integrity may pass while current credential status is not valid."
+    },
+    {
+      "id": "EACT-07",
+      "title": "Credential belongs to another subject",
+      "integrity": "match",
+      "issuer_identity": "authenticated",
+      "credential_status": "active",
+      "subject_match": "mismatch",
+      "source_state": "available",
+      "expected_disposition": "subject_mismatch",
+      "baseline_hash_only": "valid",
+      "risk_note": "Valid content and issuer do not prove that the applicant is the subject."
+    },
+    {
+      "id": "EACT-08",
+      "title": "Student consent pending",
+      "integrity": "not_checked",
+      "issuer_identity": "unknown",
+      "credential_status": "unknown",
+      "subject_match": "not_checked",
+      "source_state": "consent_pending",
+      "expected_disposition": "pending_consent",
+      "baseline_hash_only": "not_applicable",
+      "risk_note": "The workflow must wait or request consent rather than infer fraud."
+    },
+    {
+      "id": "EACT-09",
+      "title": "Credential expired",
+      "integrity": "match",
+      "issuer_identity": "authenticated",
+      "credential_status": "expired",
+      "subject_match": "match",
+      "source_state": "status_source_available",
+      "expected_disposition": "expired",
+      "baseline_hash_only": "valid",
+      "risk_note": "A matching hash alone says nothing about current validity."
+    },
+    {
+      "id": "EACT-10",
+      "title": "Issuer authenticated, status endpoint unavailable",
+      "integrity": "match",
+      "issuer_identity": "authenticated",
+      "credential_status": "unknown",
+      "subject_match": "match",
+      "source_state": "status_service_unavailable",
+      "expected_disposition": "issuer_and_integrity_verified_status_unknown",
+      "baseline_hash_only": "valid",
+      "risk_note": "Report what was verified and what remains unknown."
+    }
+  ]
+}
