@@ -1,0 +1,83 @@
+{
+  "study": "EACT-B2",
+  "notice": "Synthetic rule-priority experiments. All cases are fictional. Expected outputs describe the current EACT-v1 first-match rule order; they are not asserted to be universally correct policy decisions.",
+  "cases": [
+    {
+      "id": "B2-01",
+      "title": "Integrity mismatch while source unavailable",
+      "integrity": "mismatch",
+      "issuer_identity": "unknown",
+      "credential_status": "unknown",
+      "subject_match": "not_checked",
+      "source_state": "service_unavailable",
+      "current_expected": "altered",
+      "reason": "Current implementation checks an integrity mismatch before source availability."
+    },
+    {
+      "id": "B2-02",
+      "title": "Revoked credential and subject mismatch",
+      "integrity": "match",
+      "issuer_identity": "authenticated",
+      "credential_status": "revoked",
+      "subject_match": "mismatch",
+      "source_state": "status_source_available",
+      "current_expected": "revoked",
+      "reason": "Current implementation returns credential status before checking subject mismatch."
+    },
+    {
+      "id": "B2-03",
+      "title": "Unknown issuer and revoked status claim",
+      "integrity": "match",
+      "issuer_identity": "unknown",
+      "credential_status": "revoked",
+      "subject_match": "mismatch",
+      "source_state": "status_source_available",
+      "current_expected": "issuer_unverified",
+      "reason": "Current implementation returns issuer-unverified before considering status or subject fields."
+    },
+    {
+      "id": "B2-04",
+      "title": "Authenticated issuer and subject mismatch",
+      "integrity": "match",
+      "issuer_identity": "authenticated",
+      "credential_status": "active",
+      "subject_match": "mismatch",
+      "source_state": "available",
+      "current_expected": "subject_mismatch",
+      "reason": "Subject mismatch is returned when issuer and source evidence are otherwise available."
+    },
+    {
+      "id": "B2-05",
+      "title": "Authenticated issuer but status endpoint unavailable",
+      "integrity": "match",
+      "issuer_identity": "authenticated",
+      "credential_status": "unknown",
+      "subject_match": "match",
+      "source_state": "status_service_unavailable",
+      "current_expected": "issuer_and_integrity_verified_status_unknown",
+      "reason": "Current rule reports partial verification while explicitly leaving status unknown."
+    },
+    {
+      "id": "B2-06",
+      "title": "Integrity mismatch while consent is pending",
+      "integrity": "mismatch",
+      "issuer_identity": "unknown",
+      "credential_status": "unknown",
+      "subject_match": "not_checked",
+      "source_state": "consent_pending",
+      "current_expected": "altered",
+      "reason": "Current implementation prioritises a confirmed integrity mismatch over a pending consent workflow."
+    },
+    {
+      "id": "B2-07",
+      "title": "Consent pending with no other verified evidence",
+      "integrity": "not_checked",
+      "issuer_identity": "unknown",
+      "credential_status": "unknown",
+      "subject_match": "not_checked",
+      "source_state": "consent_pending",
+      "current_expected": "pending_consent",
+      "reason": "Current implementation returns a pending-consent state before issuer or completeness checks."
+    }
+  ]
+}
