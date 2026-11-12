@@ -1,0 +1,8 @@
+case_id,integrity,issuer_identity,credential_status,subject_match,source_state,expected_current_output,observed_output,configuration_match,notes
+B2-01,mismatch,unknown,unknown,not_checked,service_unavailable,altered,altered,yes,Integrity mismatch returned before unavailable source
+B2-02,match,authenticated,revoked,mismatch,status_source_available,revoked,revoked,yes,Revoked returned before subject mismatch
+B2-03,match,unknown,revoked,mismatch,status_source_available,issuer_unverified,issuer_unverified,yes,Unknown issuer returned before status and subject findings
+B2-04,match,authenticated,active,mismatch,available,subject_mismatch,NOT RUN,no,Observed related variant had issuer unknown and output issuer unverified
+B2-05,match,authenticated,unknown,match,status_service_unavailable,issuer_and_integrity_verified_status_unknown,NOT RUN,no,Observed related variant had issuer unknown and output generic source unavailable
+B2-06,mismatch,unknown,unknown,not_checked,consent_pending,altered,altered,yes,Integrity mismatch returned before pending consent
+B2-07,not_checked,unknown,unknown,not_checked,consent_pending,pending_consent,pending_consent,yes,Pending consent returned when no integrity mismatch
