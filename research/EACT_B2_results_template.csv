@@ -1,0 +1,8 @@
+case_id,integrity,issuer_identity,credential_status,subject_match,source_state,current_expected,observed_disposition,explanation_mentions_all_signals,hidden_signal,notes
+B2-01,mismatch,unknown,unknown,not_checked,service_unavailable,altered,,,,
+B2-02,match,authenticated,revoked,mismatch,status_source_available,revoked,,,,
+B2-03,match,unknown,revoked,mismatch,status_source_available,issuer_unverified,,,,
+B2-04,match,authenticated,active,mismatch,available,subject_mismatch,,,,
+B2-05,match,authenticated,unknown,match,status_service_unavailable,issuer_and_integrity_verified_status_unknown,,,,
+B2-06,mismatch,unknown,unknown,not_checked,consent_pending,altered,,,,
+B2-07,not_checked,unknown,unknown,not_checked,consent_pending,pending_consent,,,,
