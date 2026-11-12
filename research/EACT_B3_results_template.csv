@@ -1,11 +1,11 @@
-case_id,scenario,reference_origin,reference_signature_status,issuer_auth_age_days,status_value,status_source_type,status_source_authentication,status_age_hours,expected_disposition,observed_disposition,notes
-B3-01,Fresh authenticated issuer reports revoked status,issuer_signed_manifest,verified,2,revoked,issuer_status_api,authenticated,1,credential_status_revoked_confirmed,,,
-B3-02,Previously authenticated issuer evidence is stale,issuer_signed_manifest,verified,180,active,issuer_status_api,authenticated,1,issuer_authentication_stale,,,
-B3-03,Hash matches but reference origin is unknown,unknown,not_checked,2,active,issuer_status_api,authenticated,1,reference_provenance_unverified,,,
-B3-04,Credential status snapshot is stale,trusted_registry_export,verified,4,active,signed_registry_snapshot,authenticated,1080,status_evidence_stale,,,
-B3-05,Reference signature is invalid,issuer_signed_manifest,invalid,2,active,issuer_status_api,authenticated,1,reference_signature_invalid,,,
-B3-06,Untrusted status source claims credential revoked,issuer_signed_manifest,verified,3,revoked,manual_claim,unverified,1,status_source_untrusted,,,
-B3-07,Issuer authentication timestamp is missing,trusted_registry_export,verified,,active,issuer_status_api,authenticated,2,issuer_authentication_timestamp_missing,,,
-B3-08,All evidence is current and authenticated,issuer_signed_manifest,verified,1,active,issuer_status_api,authenticated,0.5,provenance_and_freshness_current,,,
-B3-09,Integrity mismatch against trusted signed reference,trusted_registry_export,verified,2,active,issuer_status_api,authenticated,1,integrity_mismatch_confirmed,,,
-B3-10,Issuer and status evidence are both stale,issuer_signed_manifest,verified,180,active,signed_registry_snapshot,authenticated,72,issuer_authentication_stale,,,
+case_id,scenario,reference_origin,reference_signature_status,issuer_auth_age_days,status_value,status_source_type,status_source_authentication,status_age_hours,expected_disposition,observed_disposition,ui_result_match,notes
+B3-01,Fresh authenticated issuer reports revoked status,issuer_signed_manifest,verified,2,revoked,issuer_status_api,authenticated,1,credential_status_revoked_confirmed,credential_status_revoked_confirmed,yes,"Screenshot: issuer freshness Current; status freshness Current; primary disposition Credential status confirmed: revoked."
+B3-02,Previously authenticated issuer evidence is stale,issuer_signed_manifest,verified,180,active,issuer_status_api,authenticated,1,issuer_authentication_stale,issuer_authentication_stale,yes,"Screenshot: issuer authentication age 180 days; issuer evidence Stale; status evidence Current."
+B3-03,Hash matches but reference origin is unknown,unknown,not_checked,2,active,issuer_status_api,authenticated,1,reference_provenance_unverified,reference_provenance_unverified,yes,"Screenshot: hash comparison Match; reference origin unknown; primary disposition Reference provenance unverified; both freshness indicators Current."
+B3-04,Credential status snapshot is stale,trusted_registry_export,verified,4,active,signed_registry_snapshot,authenticated,1080,status_evidence_stale,status_evidence_stale,yes,"Screenshot: status age 1080 hours (45 days); issuer evidence Current; credential-status evidence Stale."
+B3-05,Reference signature is invalid,issuer_signed_manifest,invalid,2,active,issuer_status_api,authenticated,1,reference_signature_invalid,,,Not yet captured
+B3-06,Untrusted status source claims credential revoked,issuer_signed_manifest,verified,3,revoked,manual_claim,unverified,1,status_source_untrusted,,,Not yet captured
+B3-07,Issuer authentication timestamp is missing,trusted_registry_export,verified,,active,issuer_status_api,authenticated,2,issuer_authentication_timestamp_missing,,,Not yet captured
+B3-08,All evidence is current and authenticated,issuer_signed_manifest,verified,1,active,issuer_status_api,authenticated,0.5,provenance_and_freshness_current,,,Not yet captured
+B3-09,Integrity mismatch against trusted signed reference,trusted_registry_export,verified,2,active,issuer_status_api,authenticated,1,integrity_mismatch_confirmed,,,Not yet captured
+B3-10,Issuer and status evidence are both stale,issuer_signed_manifest,verified,180,active,signed_registry_snapshot,authenticated,72,issuer_authentication_stale,,,Not yet captured
