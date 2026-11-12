@@ -1,0 +1,6 @@
+test_id,integrity,issuer_identity,credential_status,subject_match,source_state,eact_v1,eact_v2_primary,findings,configuration_note
+B2-02a,match,authenticated,revoked,match,available_consent_granted,revoked,revoked,credential_revoked,Source token differs from protocol status_source_available but is accepted as available by current code
+B2-02b,match,authenticated,revoked,mismatch,available_consent_granted,revoked,manual_review_multiple_findings,credential_revoked;subject_mismatch,Source token differs from protocol status_source_available but is accepted as available by current code
+B2-03a,match,unknown,revoked,match,available_consent_granted,issuer_unverified,issuer_unverified,issuer_not_authenticated;status_claim_not_authenticated,Available-source variant; issuer remains unauthenticated
+B2-03b,match,unknown,revoked,mismatch,available_consent_granted,issuer_unverified,issuer_unverified,issuer_not_authenticated;status_claim_not_authenticated;subject_mismatch,Available-source variant; issuer remains unauthenticated
+EX-INT-01,mismatch,unknown,revoked,match,available,altered,altered,integrity_mismatch;issuer_not_authenticated;status_claim_not_authenticated,Exploratory multi-signal combination outside the exact B2 cases
