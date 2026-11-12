@@ -63,11 +63,12 @@ with st.sidebar:
     def selected_index(options, value):
         return options.index(value) if value in options else 0
 
-    integrity = st.selectbox("Document integrity", integrity_options, index=selected_index(integrity_options, selected["integrity"]))
-    issuer = st.selectbox("Issuer identity", issuer_options, index=selected_index(issuer_options, selected["issuer_identity"]))
-    credential_status = st.selectbox("Credential status", status_options, index=selected_index(status_options, selected["credential_status"]))
-    subject = st.selectbox("Subject match", subject_options, index=selected_index(subject_options, selected["subject_match"]))
-    source_state = st.selectbox("Source / consent state", source_options, index=selected_index(source_options, selected["source_state"]))
+    # Key controls by scenario so switching cases loads that fixture's defaults.
+    integrity = st.selectbox("Document integrity", integrity_options, index=selected_index(integrity_options, selected["integrity"]), key=f"integrity_{selected['id']}")
+    issuer = st.selectbox("Issuer identity", issuer_options, index=selected_index(issuer_options, selected["issuer_identity"]), key=f"issuer_{selected['id']}")
+    credential_status = st.selectbox("Credential status", status_options, index=selected_index(status_options, selected["credential_status"]), key=f"status_{selected['id']}")
+    subject = st.selectbox("Subject match", subject_options, index=selected_index(subject_options, selected["subject_match"]), key=f"subject_{selected['id']}")
+    source_state = st.selectbox("Source / consent state", source_options, index=selected_index(source_options, selected["source_state"]), key=f"source_{selected['id']}")
 
 inputs = {
     "integrity": integrity,
@@ -78,7 +79,28 @@ inputs = {
 }
 
 st.subheader(selected["id"] + " — " + selected["title"])
-st.write(selected["risk_note"])
+st.caption("The scenario title and risk note describe the selected fixture. The controls below are the evidence values actually evaluated.")
+st.write(selected.get("risk_note", selected.get("reason", "Synthetic conflict test case.")))
+
+fixture_inputs = {
+    "integrity": selected["integrity"],
+    "issuer_identity": selected["issuer_identity"],
+    "credential_status": selected["credential_status"],
+    "subject_match": selected["subject_match"],
+    "source_state": selected["source_state"],
+}
+fixture_unchanged = inputs == fixture_inputs
+
+if fixture_unchanged:
+    st.success("Using the selected fixture's original evidence values.")
+else:
+    st.warning(
+        "Modified test configuration: one or more controls differ from the selected "
+        "fixture. Results below use the edited values, not the original fixture."
+    )
+
+with st.expander("Current evidence inputs used for this result"):
+    st.json(inputs)
 
 v1 = evaluate_evidence(**inputs)
 v2 = evaluate_evidence_v2(**inputs)
