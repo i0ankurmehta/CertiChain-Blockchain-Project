@@ -159,9 +159,8 @@ with st.sidebar:
         "Turn on Synthetic Data Records",
         key="synthetic_mode",
         help=(
-            "Loads fictional sample records into a separate demonstration ledger. "
-            "The manual ledger is kept separately in this Streamlit session; "
-            "neither ledger is durable storage yet."
+            "Loads fictional sample records from the repository into a separate "
+            "demonstration ledger. Your manual ledger is preserved."
         ),
     )
 
@@ -182,18 +181,6 @@ with st.sidebar:
         st.success("Synthetic ledger loaded")
         st.caption(st.session_state.synthetic_dataset_name)
         st.caption("Fictional demonstration data — not university records.")
-    elif st.session_state.synthetic_chain is None:
-        st.info(
-            "Synthetic ledger not loaded yet. Turn this switch ON to build it "
-            "from the repository's fictional sample dataset."
-        )
-    else:
-        st.info(
-            "Synthetic ledger is hidden, not deleted. Its current records and "
-            "any test changes are retained in this Streamlit session. Turn "
-            "Synthetic Data Records ON to view it again. Session data is not "
-            "permanent storage and may be cleared when the session ends."
-        )
 
     st.divider()
 
