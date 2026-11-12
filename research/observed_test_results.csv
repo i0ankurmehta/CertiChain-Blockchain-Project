@@ -1,5 +1,5 @@
 test_id,setup,intervention,observed_outcome,status,evidence_note
 A1,Clean synthetic ledger with genesis plus three records,None,4 of 4 blocks marked verified; audit banner passed,PASS,User screenshots show blocks 0-3 green and stored/actual hashes matching
-A2,Synthetic ledger clean; target block 1 (Rohan Sharma),CGPA changed 8.6 to 9.9 without re-mining,Block 1 direct hash mismatch; blocks 1-3 marked compromised; genesis remains verified,PASS,Blocks 2 and 3 retain matching local hashes but are flagged by downstream trust propagation
-A3,Tampered synthetic ledger,Reset Synthetic Ledger,All four blocks should return to verified; not yet evidenced,PENDING,
-A4,Manual ledger plus synthetic ledger,Switch modes and tamper synthetic block,Manual ledger should remain unchanged; not yet evidenced,PENDING,
+A2,Synthetic ledger clean; target block 1 (Rohan Sharma),CGPA changed 8.6 to 9.9 without re-mining,Block 1 direct hash mismatch; blocks 1-3 marked compromised; genesis remains verified,PASS,User screenshots show direct hash mismatch in block 1; blocks 2 and 3 flagged by downstream trust propagation
+A3,Tampered synthetic ledger,Click Reset Synthetic Ledger,All four blocks returned to verified; Rohan 8.6 Priya 9.1 Aman 7.4 restored,PASS,User-confirmed after performing reset; no dedicated post-reset screenshot supplied
+A4,Manual ledger plus synthetic ledger,Create Research Test Candidate TEST-001 CGPA 8.2; switch to synthetic; tamper synthetic; switch back,Manual test record remained available; manual and synthetic ledgers remained independent,PASS,User-confirmed in same Streamlit session; does not test persistence after session or server restart
