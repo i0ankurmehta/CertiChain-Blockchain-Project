@@ -5,16 +5,19 @@ on:
     paths:
       - "eact_rules.py"
       - "eact_provenance.py"
+      - "eact_trust_lifecycle.py"
       - "pages/**"
       - "tests/**"
       - "research/verification_scenarios.json"
       - "research/EACT_B2_conflict_scenarios.json"
       - "research/EACT_B3_provenance_scenarios.json"
+      - "research/EACT_B4_trust_lifecycle_scenarios.json"
       - ".github/workflows/eact-tests.yml"
   push:
     branches:
       - "feature/eact-v2-multi-finding"
       - "feature/eact-b3-provenance-freshness"
+      - "feature/eact-b4-trust-anchor-lifecycle"
 
 jobs:
   unit-tests:
