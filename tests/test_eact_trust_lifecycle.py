@@ -72,6 +72,20 @@ class EACTB4ScenarioTests(unittest.TestCase):
         self.assertEqual(result["current_key_state"], "active")
         self.assertEqual(result["untrusted_event_count"], 1)
 
+    def test_signature_not_checked_never_returns_valid_primary_disposition(self):
+        case = dict(self.scenarios[0])
+        case["verification"] = dict(case["verification"])
+        case["verification"]["signature_status"] = "not_checked"
+        result = evaluate_case(case)
+        self.assertEqual(result["disposition"], "credential_signature_not_checked")
+
+    def test_invalid_signature_takes_precedence_over_other_positive_metadata(self):
+        case = dict(self.scenarios[0])
+        case["verification"] = dict(case["verification"])
+        case["verification"]["signature_status"] = "invalid"
+        result = evaluate_case(case)
+        self.assertEqual(result["disposition"], "credential_signature_invalid")
+
     def test_unknown_anchor_is_not_trusted(self):
         result = evaluate_case(self.scenarios[8])
         self.assertEqual(result["disposition"], "trust_anchor_not_established")
