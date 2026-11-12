@@ -404,6 +404,13 @@ def evaluate_trust_lifecycle(
             "The supplied signature check reports that the credential signature is invalid.",
             "Reject this signature and obtain a fresh issuer-issued credential.",
         )
+    elif signature_status == "not_checked":
+        primary = (
+            "credential_signature_not_checked",
+            "Credential signature not checked",
+            "The credential's cryptographic signature has not been validated, so the system cannot report a valid signature.",
+            "Validate the signature with a supported cryptographic implementation and trusted public key.",
+        )
     elif not timestamp_trusted:
         primary = (
             "trusted_signing_time_not_established",
