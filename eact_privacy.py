@@ -157,6 +157,7 @@ def _base_result(scenario: Dict[str, Any], credential: Dict[str, Any]) -> Dict[s
         "proposed_claim_count": 0,
         "proposed_exposure_units": 0,
         "exposure_reduction_percent": 0.0,
+        "exposure_reduction_assessed": False,
         "high_sensitivity_claims_proposed": [],
     }
 
@@ -490,6 +491,7 @@ def evaluate_disclosure_request(
         "proposed_claim_count": len(proposed),
         "proposed_exposure_units": proposed_units,
         "exposure_reduction_percent": round(reduction, 1),
+        "exposure_reduction_assessed": True,
         "high_sensitivity_claims_proposed": high_sensitivity,
         "findings": findings,
     })
