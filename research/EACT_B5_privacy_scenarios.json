@@ -1,0 +1,529 @@
+{
+  "version": "EACT-B5-v1",
+  "title": "Privacy-preserving academic credential disclosure scenarios",
+  "data_notice": "All person, institution, credential and verifier records are fictional. No live credential or issuer evidence is represented.",
+  "scenarios": [
+    {
+      "id": "B5-01",
+      "title": "Minimum degree proof for employment",
+      "summary": "Employer requests only the attributes needed to confirm the awarded qualification.",
+      "verifier_id": "Northstar Hiring",
+      "purpose": "employment_degree_verification",
+      "secondary_use": "",
+      "retention_days": 30,
+      "presentation_history": [],
+      "credential": {
+        "issuer_trust": "trusted",
+        "credential_status": "active",
+        "claims": {
+          "award_status": "awarded",
+          "qualification_level": "Bachelor's degree",
+          "program_name": "Bachelor of Computer Applications (BCA)",
+          "institution_name": "Northstar Fictional University",
+          "graduation_year": 2025,
+          "enrollment_status": "not_enrolled",
+          "cgpa": 8.6,
+          "transcript": {
+            "Programming": 8.8,
+            "Mathematics": 8.1,
+            "Database Systems": 8.7
+          },
+          "roll_number": "SYN-BCA-2401",
+          "date_of_birth": "2004-07-14",
+          "home_address": "42 Example Lane, Fictional City",
+          "email": "candidate@example.invalid",
+          "global_student_id": "SYN-STUDENT-0001",
+          "exact_award_date": "2025-06-18",
+          "campus": "Northstar Main Campus"
+        }
+      },
+      "requested_claims": [
+        "award_status",
+        "qualification_level",
+        "program_name",
+        "institution_name"
+      ],
+      "approved_claims": [
+        "award_status",
+        "qualification_level",
+        "program_name",
+        "institution_name"
+      ],
+      "requested_predicates": [],
+      "approved_predicates": [],
+      "expected_disposition": "minimum_disclosure_sufficient"
+    },
+    {
+      "id": "B5-02",
+      "title": "Employer asks for the entire academic record",
+      "summary": "A degree check is expanded to request the transcript, date of birth, home address and roll number.",
+      "verifier_id": "Northstar Hiring",
+      "purpose": "employment_degree_verification",
+      "secondary_use": "",
+      "retention_days": 30,
+      "presentation_history": [],
+      "credential": {
+        "issuer_trust": "trusted",
+        "credential_status": "active",
+        "claims": {
+          "award_status": "awarded",
+          "qualification_level": "Bachelor's degree",
+          "program_name": "Bachelor of Computer Applications (BCA)",
+          "institution_name": "Northstar Fictional University",
+          "graduation_year": 2025,
+          "enrollment_status": "not_enrolled",
+          "cgpa": 8.6,
+          "transcript": {
+            "Programming": 8.8,
+            "Mathematics": 8.1,
+            "Database Systems": 8.7
+          },
+          "roll_number": "SYN-BCA-2401",
+          "date_of_birth": "2004-07-14",
+          "home_address": "42 Example Lane, Fictional City",
+          "email": "candidate@example.invalid",
+          "global_student_id": "SYN-STUDENT-0001",
+          "exact_award_date": "2025-06-18",
+          "campus": "Northstar Main Campus"
+        }
+      },
+      "requested_claims": [
+        "award_status",
+        "qualification_level",
+        "program_name",
+        "institution_name",
+        "transcript",
+        "date_of_birth",
+        "home_address",
+        "roll_number"
+      ],
+      "approved_claims": [
+        "award_status",
+        "qualification_level",
+        "program_name",
+        "institution_name",
+        "transcript",
+        "date_of_birth",
+        "home_address",
+        "roll_number"
+      ],
+      "requested_predicates": [],
+      "approved_predicates": [],
+      "expected_disposition": "sufficient_evidence_with_privacy_warnings"
+    },
+    {
+      "id": "B5-03",
+      "title": "Scholarship threshold without revealing raw CGPA",
+      "summary": "Scholarship verifier asks whether CGPA is at least 7.0; the holder approves a predicate result rather than the raw score.",
+      "verifier_id": "Northstar Scholarship Office",
+      "purpose": "scholarship_eligibility",
+      "secondary_use": "",
+      "retention_days": 30,
+      "presentation_history": [],
+      "credential": {
+        "issuer_trust": "trusted",
+        "credential_status": "active",
+        "claims": {
+          "award_status": "awarded",
+          "qualification_level": "Bachelor's degree",
+          "program_name": "Bachelor of Computer Applications (BCA)",
+          "institution_name": "Northstar Fictional University",
+          "graduation_year": 2025,
+          "enrollment_status": "not_enrolled",
+          "cgpa": 8.6,
+          "transcript": {
+            "Programming": 8.8,
+            "Mathematics": 8.1,
+            "Database Systems": 8.7
+          },
+          "roll_number": "SYN-BCA-2401",
+          "date_of_birth": "2004-07-14",
+          "home_address": "42 Example Lane, Fictional City",
+          "email": "candidate@example.invalid",
+          "global_student_id": "SYN-STUDENT-0001",
+          "exact_award_date": "2025-06-18",
+          "campus": "Northstar Main Campus"
+        }
+      },
+      "requested_claims": [
+        "award_status",
+        "program_name",
+        "institution_name"
+      ],
+      "approved_claims": [
+        "award_status",
+        "program_name",
+        "institution_name"
+      ],
+      "requested_predicates": [
+        "cgpa_at_least_7_0"
+      ],
+      "approved_predicates": [
+        "cgpa_at_least_7_0"
+      ],
+      "expected_disposition": "minimum_disclosure_sufficient"
+    },
+    {
+      "id": "B5-04",
+      "title": "Internship checks current enrollment",
+      "summary": "An internship verifier asks for current enrollment and programme, not grades or a full transcript.",
+      "verifier_id": "Northstar Internship Team",
+      "purpose": "internship_enrollment",
+      "secondary_use": "",
+      "retention_days": 14,
+      "presentation_history": [],
+      "credential": {
+        "issuer_trust": "trusted",
+        "credential_status": "active",
+        "claims": {
+          "award_status": "in_progress",
+          "qualification_level": "Bachelor's degree",
+          "program_name": "Bachelor of Computer Applications (BCA)",
+          "institution_name": "Northstar Fictional University",
+          "graduation_year": 2027,
+          "enrollment_status": "currently_enrolled",
+          "cgpa": 8.1,
+          "transcript": {
+            "Programming": 8,
+            "Mathematics": 8.2,
+            "Database Systems": 8.1
+          },
+          "roll_number": "SYN-BCA-2601",
+          "date_of_birth": "2005-03-22",
+          "home_address": "17 Sample Road, Fictional City",
+          "email": "student@example.invalid",
+          "global_student_id": "SYN-STUDENT-0002",
+          "exact_award_date": "",
+          "campus": "Northstar Main Campus"
+        }
+      },
+      "requested_claims": [
+        "enrollment_status",
+        "program_name",
+        "institution_name"
+      ],
+      "approved_claims": [
+        "enrollment_status",
+        "program_name",
+        "institution_name"
+      ],
+      "requested_predicates": [],
+      "approved_predicates": [],
+      "expected_disposition": "minimum_disclosure_sufficient"
+    },
+    {
+      "id": "B5-05",
+      "title": "Holder withholds a required claim",
+      "summary": "The holder declines to share the awarding institution, so the degree-verification request cannot be completed under the configured policy.",
+      "verifier_id": "Northstar Hiring",
+      "purpose": "employment_degree_verification",
+      "secondary_use": "",
+      "retention_days": 30,
+      "presentation_history": [],
+      "credential": {
+        "issuer_trust": "trusted",
+        "credential_status": "active",
+        "claims": {
+          "award_status": "awarded",
+          "qualification_level": "Bachelor's degree",
+          "program_name": "Bachelor of Computer Applications (BCA)",
+          "institution_name": "Northstar Fictional University",
+          "graduation_year": 2025,
+          "enrollment_status": "not_enrolled",
+          "cgpa": 8.6,
+          "transcript": {
+            "Programming": 8.8,
+            "Mathematics": 8.1,
+            "Database Systems": 8.7
+          },
+          "roll_number": "SYN-BCA-2401",
+          "date_of_birth": "2004-07-14",
+          "home_address": "42 Example Lane, Fictional City",
+          "email": "candidate@example.invalid",
+          "global_student_id": "SYN-STUDENT-0001",
+          "exact_award_date": "2025-06-18",
+          "campus": "Northstar Main Campus"
+        }
+      },
+      "requested_claims": [
+        "award_status",
+        "qualification_level",
+        "program_name",
+        "institution_name"
+      ],
+      "approved_claims": [
+        "award_status",
+        "qualification_level",
+        "program_name"
+      ],
+      "requested_predicates": [],
+      "approved_predicates": [],
+      "expected_disposition": "insufficient_evidence_or_consent"
+    },
+    {
+      "id": "B5-06",
+      "title": "Unscoped candidate profiling request",
+      "summary": "A verifier asks for academic and personal data for an undefined bulk-profiling purpose with no approved minimum-disclosure policy.",
+      "verifier_id": "Unknown Data Broker",
+      "purpose": "bulk_candidate_profiling",
+      "secondary_use": "",
+      "retention_days": null,
+      "presentation_history": [],
+      "credential": {
+        "issuer_trust": "trusted",
+        "credential_status": "active",
+        "claims": {
+          "award_status": "awarded",
+          "qualification_level": "Bachelor's degree",
+          "program_name": "Bachelor of Computer Applications (BCA)",
+          "institution_name": "Northstar Fictional University",
+          "graduation_year": 2025,
+          "enrollment_status": "not_enrolled",
+          "cgpa": 8.6,
+          "transcript": {
+            "Programming": 8.8,
+            "Mathematics": 8.1,
+            "Database Systems": 8.7
+          },
+          "roll_number": "SYN-BCA-2401",
+          "date_of_birth": "2004-07-14",
+          "home_address": "42 Example Lane, Fictional City",
+          "email": "candidate@example.invalid",
+          "global_student_id": "SYN-STUDENT-0001",
+          "exact_award_date": "2025-06-18",
+          "campus": "Northstar Main Campus"
+        }
+      },
+      "requested_claims": [
+        "transcript",
+        "date_of_birth",
+        "home_address",
+        "email"
+      ],
+      "approved_claims": [
+        "transcript",
+        "date_of_birth",
+        "home_address",
+        "email"
+      ],
+      "requested_predicates": [],
+      "approved_predicates": [],
+      "expected_disposition": "purpose_not_supported"
+    },
+    {
+      "id": "B5-07",
+      "title": "Global student ID requested by an employer",
+      "summary": "The degree request is otherwise sufficient, but the verifier also asks for a persistent cross-institution student identifier.",
+      "verifier_id": "Northstar Hiring",
+      "purpose": "employment_degree_verification",
+      "secondary_use": "",
+      "retention_days": 30,
+      "presentation_history": [],
+      "credential": {
+        "issuer_trust": "trusted",
+        "credential_status": "active",
+        "claims": {
+          "award_status": "awarded",
+          "qualification_level": "Bachelor's degree",
+          "program_name": "Bachelor of Computer Applications (BCA)",
+          "institution_name": "Northstar Fictional University",
+          "graduation_year": 2025,
+          "enrollment_status": "not_enrolled",
+          "cgpa": 8.6,
+          "transcript": {
+            "Programming": 8.8,
+            "Mathematics": 8.1,
+            "Database Systems": 8.7
+          },
+          "roll_number": "SYN-BCA-2401",
+          "date_of_birth": "2004-07-14",
+          "home_address": "42 Example Lane, Fictional City",
+          "email": "candidate@example.invalid",
+          "global_student_id": "SYN-STUDENT-0001",
+          "exact_award_date": "2025-06-18",
+          "campus": "Northstar Main Campus"
+        }
+      },
+      "requested_claims": [
+        "award_status",
+        "qualification_level",
+        "program_name",
+        "institution_name",
+        "global_student_id"
+      ],
+      "approved_claims": [
+        "award_status",
+        "qualification_level",
+        "program_name",
+        "institution_name",
+        "global_student_id"
+      ],
+      "requested_predicates": [],
+      "approved_predicates": [],
+      "expected_disposition": "sufficient_evidence_with_privacy_warnings"
+    },
+    {
+      "id": "B5-08",
+      "title": "Same global identifier links two verifiers",
+      "summary": "A persistent student identifier is disclosed again after having been used with a different verifier, creating cross-context linkability.",
+      "verifier_id": "Northstar Recruitment Partner",
+      "purpose": "employment_degree_verification",
+      "secondary_use": "",
+      "retention_days": 30,
+      "presentation_history": [
+        {
+          "verifier_id": "Earlier Employer",
+          "identifier_mode": "global_student_id"
+        }
+      ],
+      "credential": {
+        "issuer_trust": "trusted",
+        "credential_status": "active",
+        "claims": {
+          "award_status": "awarded",
+          "qualification_level": "Bachelor's degree",
+          "program_name": "Bachelor of Computer Applications (BCA)",
+          "institution_name": "Northstar Fictional University",
+          "graduation_year": 2025,
+          "enrollment_status": "not_enrolled",
+          "cgpa": 8.6,
+          "transcript": {
+            "Programming": 8.8,
+            "Mathematics": 8.1,
+            "Database Systems": 8.7
+          },
+          "roll_number": "SYN-BCA-2401",
+          "date_of_birth": "2004-07-14",
+          "home_address": "42 Example Lane, Fictional City",
+          "email": "candidate@example.invalid",
+          "global_student_id": "SYN-STUDENT-0001",
+          "exact_award_date": "2025-06-18",
+          "campus": "Northstar Main Campus"
+        }
+      },
+      "requested_claims": [
+        "award_status",
+        "qualification_level",
+        "program_name",
+        "institution_name",
+        "global_student_id"
+      ],
+      "approved_claims": [
+        "award_status",
+        "qualification_level",
+        "program_name",
+        "institution_name",
+        "global_student_id"
+      ],
+      "requested_predicates": [],
+      "approved_predicates": [],
+      "expected_disposition": "sufficient_evidence_with_privacy_warnings"
+    },
+    {
+      "id": "B5-09",
+      "title": "Academic attributes combine into a fingerprint",
+      "summary": "Exact award date, campus and graduation year are requested along with the programme and institution. Individually ordinary attributes can combine to identify a person.",
+      "verifier_id": "Northstar Hiring",
+      "purpose": "employment_degree_verification",
+      "secondary_use": "",
+      "retention_days": 30,
+      "presentation_history": [],
+      "credential": {
+        "issuer_trust": "trusted",
+        "credential_status": "active",
+        "claims": {
+          "award_status": "awarded",
+          "qualification_level": "Bachelor's degree",
+          "program_name": "Bachelor of Computer Applications (BCA)",
+          "institution_name": "Northstar Fictional University",
+          "graduation_year": 2025,
+          "enrollment_status": "not_enrolled",
+          "cgpa": 8.6,
+          "transcript": {
+            "Programming": 8.8,
+            "Mathematics": 8.1,
+            "Database Systems": 8.7
+          },
+          "roll_number": "SYN-BCA-2401",
+          "date_of_birth": "2004-07-14",
+          "home_address": "42 Example Lane, Fictional City",
+          "email": "candidate@example.invalid",
+          "global_student_id": "SYN-STUDENT-0001",
+          "exact_award_date": "2025-06-18",
+          "campus": "Northstar Main Campus"
+        }
+      },
+      "requested_claims": [
+        "award_status",
+        "qualification_level",
+        "program_name",
+        "institution_name",
+        "graduation_year",
+        "exact_award_date",
+        "campus"
+      ],
+      "approved_claims": [
+        "award_status",
+        "qualification_level",
+        "program_name",
+        "institution_name",
+        "graduation_year",
+        "exact_award_date",
+        "campus"
+      ],
+      "requested_predicates": [],
+      "approved_predicates": [],
+      "expected_disposition": "sufficient_evidence_with_privacy_warnings"
+    },
+    {
+      "id": "B5-10",
+      "title": "Secondary use and unspecified retention",
+      "summary": "The verifier's stated employment check is accompanied by a separate insurance-underwriting use and no retention period.",
+      "verifier_id": "Northstar Hiring",
+      "purpose": "employment_degree_verification",
+      "secondary_use": "insurance_underwriting",
+      "retention_days": null,
+      "presentation_history": [],
+      "credential": {
+        "issuer_trust": "trusted",
+        "credential_status": "active",
+        "claims": {
+          "award_status": "awarded",
+          "qualification_level": "Bachelor's degree",
+          "program_name": "Bachelor of Computer Applications (BCA)",
+          "institution_name": "Northstar Fictional University",
+          "graduation_year": 2025,
+          "enrollment_status": "not_enrolled",
+          "cgpa": 8.6,
+          "transcript": {
+            "Programming": 8.8,
+            "Mathematics": 8.1,
+            "Database Systems": 8.7
+          },
+          "roll_number": "SYN-BCA-2401",
+          "date_of_birth": "2004-07-14",
+          "home_address": "42 Example Lane, Fictional City",
+          "email": "candidate@example.invalid",
+          "global_student_id": "SYN-STUDENT-0001",
+          "exact_award_date": "2025-06-18",
+          "campus": "Northstar Main Campus"
+        }
+      },
+      "requested_claims": [
+        "award_status",
+        "qualification_level",
+        "program_name",
+        "institution_name"
+      ],
+      "approved_claims": [
+        "award_status",
+        "qualification_level",
+        "program_name",
+        "institution_name"
+      ],
+      "requested_predicates": [],
+      "approved_predicates": [],
+      "expected_disposition": "secondary_use_requires_review"
+    }
+  ]
+}
