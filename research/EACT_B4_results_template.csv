@@ -1,0 +1,11 @@
+case_id,scenario,expected_disposition,observed_disposition,ui_result_match,current_key_state,historical_key_state_at_signing,finding_count,notes
+B4-01,"Active key and current credential signature",active_key_historical_signature_valid,,,active,,,Not yet captured
+B4-02,"Old key rotated after credential signing",historical_signature_predates_rotation,,,rotated,,,Not yet captured
+B4-03,"Credential signed after routine key rotation",key_rotated_before_signing,,,rotated,,,Not yet captured
+B4-04,"Key compromise effective before signature, reported later",key_compromised_at_signing,,,compromised,,,Not yet captured
+B4-05,"Historical signature predates later key compromise",historical_signature_predates_compromise,,,active,,,Not yet captured
+B4-06,"Expired key, signature timestamped before expiry",historically_valid_key_now_expired,,,expired,,,Not yet captured
+B4-07,"Credential signed after key expiry",key_expired_at_signing,,,expired,,,Not yet captured
+B4-08,"Unverified manual claim says the key was revoked",lifecycle_event_unverified,,,active,,,Not yet captured
+B4-09,"Credential references an unknown trust anchor",trust_anchor_not_established,,,active,,,Not yet captured
+B4-10,"Compromise event exists but signing timestamp is untrusted",trusted_signing_time_not_established,,,active,,,Not yet captured

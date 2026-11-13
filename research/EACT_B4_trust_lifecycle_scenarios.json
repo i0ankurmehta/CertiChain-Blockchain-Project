@@ -1,0 +1,314 @@
+{
+  "study": "EACT-B4",
+  "title": "Trust anchor governance and evidence lifecycle",
+  "assessment_time": "2026-11-13T00:00:00Z",
+  "note": "Synthetic research fixtures. These scenarios model trust-anchor governance, lifecycle events, historical signing time, and audit-trail tampering. No private keys or live trust services are connected.",
+  "scenarios": [
+    {
+      "id": "B4-01",
+      "title": "Active key and current credential signature",
+      "description": "A registered trusted key is within its validity interval, with a valid signature and trusted timestamp.",
+      "expected_disposition": "active_key_historical_signature_valid",
+      "anchor": {
+        "key_id": "UNI-KEY-A",
+        "issuer_id": "SYNTHETIC-UNIVERSITY-01",
+        "fingerprint": "SHA256:SIMULATED-A1",
+        "registered": true,
+        "registry_status": "trusted",
+        "valid_from": "2025-01-01T00:00:00Z",
+        "expires_at": "2027-01-01T00:00:00Z"
+      },
+      "lifecycle_events": [],
+      "verification": {
+        "credential_id": "SYN-CRED-001",
+        "signature_status": "valid",
+        "signed_at": "2026-09-20T10:00:00Z",
+        "verified_at": "2026-09-21T10:00:00Z",
+        "timestamp_source": "trusted_timestamp_authority",
+        "timestamp_signature_status": "verified"
+      }
+    },
+    {
+      "id": "B4-02",
+      "title": "Old key rotated after credential signing",
+      "description": "A trusted timestamp proves the signature predates a routine key rotation. Historical evidence is retained; old key is no longer for new signatures.",
+      "expected_disposition": "historical_signature_predates_rotation",
+      "anchor": {
+        "key_id": "UNI-KEY-B",
+        "issuer_id": "SYNTHETIC-UNIVERSITY-02",
+        "fingerprint": "SHA256:SIMULATED-B2",
+        "registered": true,
+        "registry_status": "trusted",
+        "valid_from": "2024-01-01T00:00:00Z",
+        "expires_at": "2028-01-01T00:00:00Z"
+      },
+      "lifecycle_events": [
+        {
+          "event_id": "EV-B4-02",
+          "event_type": "rotated",
+          "effective_at": "2026-06-01T00:00:00Z",
+          "recorded_at": "2026-06-01T00:15:00Z",
+          "source": "trusted_anchor_registry",
+          "authority_status": "authenticated",
+          "event_signature_status": "verified",
+          "reason": "routine_rotation"
+        }
+      ],
+      "verification": {
+        "credential_id": "SYN-CRED-002",
+        "signature_status": "valid",
+        "signed_at": "2026-05-01T12:00:00Z",
+        "verified_at": "2026-05-02T12:00:00Z",
+        "timestamp_source": "trusted_timestamp_authority",
+        "timestamp_signature_status": "verified"
+      }
+    },
+    {
+      "id": "B4-03",
+      "title": "Credential signed after routine key rotation",
+      "description": "The old key's rotation effective time precedes the credential's trusted signing time.",
+      "expected_disposition": "key_rotated_before_signing",
+      "anchor": {
+        "key_id": "UNI-KEY-C-OLD",
+        "issuer_id": "SYNTHETIC-UNIVERSITY-03",
+        "fingerprint": "SHA256:SIMULATED-C3",
+        "registered": true,
+        "registry_status": "trusted",
+        "valid_from": "2024-01-01T00:00:00Z",
+        "expires_at": "2028-01-01T00:00:00Z"
+      },
+      "lifecycle_events": [
+        {
+          "event_id": "EV-B4-03",
+          "event_type": "rotated",
+          "effective_at": "2026-06-01T00:00:00Z",
+          "recorded_at": "2026-06-01T00:05:00Z",
+          "source": "trusted_anchor_registry",
+          "authority_status": "authenticated",
+          "event_signature_status": "verified",
+          "reason": "routine_rotation"
+        }
+      ],
+      "verification": {
+        "credential_id": "SYN-CRED-003",
+        "signature_status": "valid",
+        "signed_at": "2026-07-01T12:00:00Z",
+        "verified_at": "2026-07-02T12:00:00Z",
+        "timestamp_source": "trusted_timestamp_authority",
+        "timestamp_signature_status": "verified"
+      }
+    },
+    {
+      "id": "B4-04",
+      "title": "Key compromise effective before signature, reported later",
+      "description": "The trusted compromise event was recorded after its effective time. The credential was signed inside the compromise interval.",
+      "expected_disposition": "key_compromised_at_signing",
+      "anchor": {
+        "key_id": "UNI-KEY-D",
+        "issuer_id": "SYNTHETIC-UNIVERSITY-04",
+        "fingerprint": "SHA256:SIMULATED-D4",
+        "registered": true,
+        "registry_status": "trusted",
+        "valid_from": "2024-01-01T00:00:00Z",
+        "expires_at": "2028-01-01T00:00:00Z"
+      },
+      "lifecycle_events": [
+        {
+          "event_id": "EV-B4-04",
+          "event_type": "compromised",
+          "effective_at": "2026-02-10T00:00:00Z",
+          "recorded_at": "2026-02-12T09:00:00Z",
+          "source": "issuer_security_notice",
+          "authority_status": "authenticated",
+          "event_signature_status": "verified",
+          "reason": "key_compromise"
+        }
+      ],
+      "verification": {
+        "credential_id": "SYN-CRED-004",
+        "signature_status": "valid",
+        "signed_at": "2026-02-11T10:00:00Z",
+        "verified_at": "2026-02-11T10:30:00Z",
+        "timestamp_source": "trusted_timestamp_authority",
+        "timestamp_signature_status": "verified"
+      }
+    },
+    {
+      "id": "B4-05",
+      "title": "Historical signature predates later key compromise",
+      "description": "A trusted timestamp proves signing occurred before the compromise effective time. Historical reliance still requires issuer archival policy.",
+      "expected_disposition": "historical_signature_predates_compromise",
+      "anchor": {
+        "key_id": "UNI-KEY-E",
+        "issuer_id": "SYNTHETIC-UNIVERSITY-05",
+        "fingerprint": "SHA256:SIMULATED-E5",
+        "registered": true,
+        "registry_status": "trusted",
+        "valid_from": "2024-01-01T00:00:00Z",
+        "expires_at": "2028-01-01T00:00:00Z"
+      },
+      "lifecycle_events": [
+        {
+          "event_id": "EV-B4-05",
+          "event_type": "compromised",
+          "effective_at": "2026-03-10T00:00:00Z",
+          "recorded_at": "2026-03-12T12:00:00Z",
+          "source": "issuer_security_notice",
+          "authority_status": "authenticated",
+          "event_signature_status": "verified",
+          "reason": "key_compromise"
+        }
+      ],
+      "verification": {
+        "credential_id": "SYN-CRED-005",
+        "signature_status": "valid",
+        "signed_at": "2026-03-01T10:00:00Z",
+        "verified_at": "2026-03-01T10:30:00Z",
+        "timestamp_source": "trusted_timestamp_authority",
+        "timestamp_signature_status": "verified"
+      }
+    },
+    {
+      "id": "B4-06",
+      "title": "Expired key, signature timestamped before expiry",
+      "description": "The key has since expired, but a trusted timestamp places the historical signature within the key validity interval.",
+      "expected_disposition": "historically_valid_key_now_expired",
+      "anchor": {
+        "key_id": "UNI-KEY-F",
+        "issuer_id": "SYNTHETIC-UNIVERSITY-06",
+        "fingerprint": "SHA256:SIMULATED-F6",
+        "registered": true,
+        "registry_status": "trusted",
+        "valid_from": "2024-01-01T00:00:00Z",
+        "expires_at": "2026-06-30T23:59:59Z"
+      },
+      "lifecycle_events": [],
+      "verification": {
+        "credential_id": "SYN-CRED-006",
+        "signature_status": "valid",
+        "signed_at": "2026-06-01T10:00:00Z",
+        "verified_at": "2026-06-02T10:00:00Z",
+        "timestamp_source": "trusted_timestamp_authority",
+        "timestamp_signature_status": "verified"
+      }
+    },
+    {
+      "id": "B4-07",
+      "title": "Credential signed after key expiry",
+      "description": "The trusted signing time falls after the anchor's expiry time.",
+      "expected_disposition": "key_expired_at_signing",
+      "anchor": {
+        "key_id": "UNI-KEY-G",
+        "issuer_id": "SYNTHETIC-UNIVERSITY-07",
+        "fingerprint": "SHA256:SIMULATED-G7",
+        "registered": true,
+        "registry_status": "trusted",
+        "valid_from": "2024-01-01T00:00:00Z",
+        "expires_at": "2026-06-30T23:59:59Z"
+      },
+      "lifecycle_events": [],
+      "verification": {
+        "credential_id": "SYN-CRED-007",
+        "signature_status": "valid",
+        "signed_at": "2026-07-01T10:00:00Z",
+        "verified_at": "2026-07-02T10:00:00Z",
+        "timestamp_source": "trusted_timestamp_authority",
+        "timestamp_signature_status": "verified"
+      }
+    },
+    {
+      "id": "B4-08",
+      "title": "Unverified manual claim says the key was revoked",
+      "description": "A manual claim reports revocation, but the event is not authenticated by a trusted governance source.",
+      "expected_disposition": "lifecycle_event_unverified",
+      "anchor": {
+        "key_id": "UNI-KEY-H",
+        "issuer_id": "SYNTHETIC-UNIVERSITY-08",
+        "fingerprint": "SHA256:SIMULATED-H8",
+        "registered": true,
+        "registry_status": "trusted",
+        "valid_from": "2024-01-01T00:00:00Z",
+        "expires_at": "2028-01-01T00:00:00Z"
+      },
+      "lifecycle_events": [
+        {
+          "event_id": "EV-B4-08",
+          "event_type": "revoked",
+          "effective_at": "2026-08-15T00:00:00Z",
+          "recorded_at": "2026-08-16T00:00:00Z",
+          "source": "manual_claim",
+          "authority_status": "unverified",
+          "event_signature_status": "not_checked",
+          "reason": "unknown"
+        }
+      ],
+      "verification": {
+        "credential_id": "SYN-CRED-008",
+        "signature_status": "valid",
+        "signed_at": "2026-09-01T10:00:00Z",
+        "verified_at": "2026-09-02T10:00:00Z",
+        "timestamp_source": "trusted_timestamp_authority",
+        "timestamp_signature_status": "verified"
+      }
+    },
+    {
+      "id": "B4-09",
+      "title": "Credential references an unknown trust anchor",
+      "description": "The issuer key is not present in the configured trusted anchor registry.",
+      "expected_disposition": "trust_anchor_not_established",
+      "anchor": {
+        "key_id": "UNI-KEY-UNKNOWN",
+        "issuer_id": "SYNTHETIC-UNIVERSITY-09",
+        "fingerprint": "SHA256:SIMULATED-UNKNOWN",
+        "registered": false,
+        "registry_status": "unknown",
+        "valid_from": "2024-01-01T00:00:00Z",
+        "expires_at": "2028-01-01T00:00:00Z"
+      },
+      "lifecycle_events": [],
+      "verification": {
+        "credential_id": "SYN-CRED-009",
+        "signature_status": "valid",
+        "signed_at": "2026-09-01T10:00:00Z",
+        "verified_at": "2026-09-02T10:00:00Z",
+        "timestamp_source": "trusted_timestamp_authority",
+        "timestamp_signature_status": "verified"
+      }
+    },
+    {
+      "id": "B4-10",
+      "title": "Compromise event exists but signing timestamp is untrusted",
+      "description": "A local client clock says the credential predates compromise, but the time is not backed by a trusted timestamp authority.",
+      "expected_disposition": "trusted_signing_time_not_established",
+      "anchor": {
+        "key_id": "UNI-KEY-J",
+        "issuer_id": "SYNTHETIC-UNIVERSITY-10",
+        "fingerprint": "SHA256:SIMULATED-J10",
+        "registered": true,
+        "registry_status": "trusted",
+        "valid_from": "2024-01-01T00:00:00Z",
+        "expires_at": "2028-01-01T00:00:00Z"
+      },
+      "lifecycle_events": [
+        {
+          "event_id": "EV-B4-10",
+          "event_type": "compromised",
+          "effective_at": "2026-03-01T00:00:00Z",
+          "recorded_at": "2026-03-02T00:00:00Z",
+          "source": "issuer_security_notice",
+          "authority_status": "authenticated",
+          "event_signature_status": "verified",
+          "reason": "key_compromise"
+        }
+      ],
+      "verification": {
+        "credential_id": "SYN-CRED-010",
+        "signature_status": "valid",
+        "signed_at": "2026-02-20T10:00:00Z",
+        "verified_at": "2026-02-21T10:00:00Z",
+        "timestamp_source": "client_clock",
+        "timestamp_signature_status": "not_checked"
+      }
+    }
+  ]
+}
