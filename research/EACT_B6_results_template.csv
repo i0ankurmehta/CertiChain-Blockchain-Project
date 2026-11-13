@@ -1,0 +1,16 @@
+Test ID,Scenario,Expected result,Observed local result,Status
+B6-T01,Issue and verify selective presentation,Only selected claims released,Passed,Pass
+B6-T02,Issuer signature tampering,Reject,Passed,Pass
+B6-T03,Wrong configured issuer,Reject,Passed,Pass
+B6-T04,Wrong verifier nonce,Reject,Passed,Pass
+B6-T05,Wrong verifier audience,Reject,Passed,Pass
+B6-T06,Wrong holder private key,Reject,Passed,Pass
+B6-T07,Expired issuer credential,Reject,Passed,Pass
+B6-T08,Stale holder proof,Reject,Passed,Pass
+B6-T09,Tampered disclosure,Reject,Passed,Pass
+B6-T10,Reserved claim name,Reject issuance,Passed,Pass
+B6-T11,Unknown or duplicate claim selection,Reject,Passed,Pass
+B6-T12,Untrusted issuer extraction,Treat only as key-selection hint,Passed,Pass
+B6-T13,HTTP or non-allowlisted URL,Reject,Passed,Pass
+B6-T14,Private-address DNS result,Reject,Passed,Pass
+B6-T15,Allowlisted issuer endpoint metadata,Record SHA-256 and retrieval metadata,Passed,Pass
