@@ -170,6 +170,15 @@ with left:
     st.write(result["message"])
     if result["can_verify_purpose"]:
         st.success("Synthetic evidence is sufficient for the selected purpose policy.")
+    elif result["disposition"] == "secondary_use_requires_review":
+        st.warning(
+            "The minimum evidence is present for the primary purpose, but the stated "
+            "secondary use is not approved under this policy."
+        )
+    elif result["disposition"] == "purpose_not_supported":
+        st.error("No reviewed purpose-specific policy exists; no claims are proposed.")
+    elif result["disposition"] in {"issuer_trust_not_established", "credential_status_not_active"}:
+        st.error("Issuer trust or credential status is not established; no presentation is proposed.")
     else:
         st.error("The selected purpose cannot be completed on the supplied synthetic evidence.")
 with right:
@@ -178,18 +187,30 @@ with right:
         "Claims in proposed presentation",
         f"{result['proposed_claim_count']} / {result['full_credential_claim_count']}",
     )
-    st.metric(
-        "Heuristic exposure reduction",
-        f"{result['exposure_reduction_percent']:.1f}%",
-    )
-    st.caption(
-        f"Exposure units: {result['proposed_exposure_units']} proposed vs "
-        f"{result['full_credential_exposure_units']} in the full-record baseline. "
-        "These are illustrative weights, not a validated privacy metric."
-    )
+    if result["exposure_reduction_assessed"]:
+        st.metric(
+            "Heuristic exposure reduction",
+            f"{result['exposure_reduction_percent']:.1f}%",
+        )
+        st.caption(
+            f"Exposure units: {result['proposed_exposure_units']} proposed vs "
+            f"{result['full_credential_exposure_units']} in the full-record baseline. "
+            "These are illustrative weights, not a validated privacy metric."
+        )
+    else:
+        st.metric("Heuristic exposure reduction", "Not assessed")
+        st.caption(
+            "No valid presentation proposal was generated, so disclosure reduction "
+            "is not scored for this case."
+        )
 
 if result["presentation_ready"]:
     st.success("Minimum presentation is complete and has no flagged privacy issue under this prototype policy.")
+elif result["disposition"] == "secondary_use_requires_review":
+    st.warning(
+        "The primary-purpose minimum is present, but no presentation should be completed "
+        "until the secondary use is removed or separately reviewed."
+    )
 elif result["can_verify_purpose"]:
     st.warning(
         "The minimum evidence may satisfy the purpose, but privacy findings remain. "
