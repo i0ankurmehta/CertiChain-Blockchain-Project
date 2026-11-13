@@ -208,12 +208,32 @@ with left:
     st.markdown("**Recommended next step**")
     st.write(result["next_action"])
 with right:
-    st.markdown("#### Key lifecycle state")
-    st.metric("Current key state", result["current_key_state"].replace("_", " ").title())
+    st.markdown("#### Trust and key lifecycle")
+    trust_label = (
+        "Trusted"
+        if result["anchor_trusted"]
+        else f'Not established ({anchor["registry_status"]})'
+    )
+    st.metric("Trust registry status", trust_label)
     st.metric(
-        "Key state at signing",
+        "Current key lifecycle state (metadata)",
+        result["current_key_state"].replace("_", " ").title(),
+    )
+    if not result["anchor_trusted"]:
+        st.warning(
+            "The lifecycle state is inferred from supplied validity dates and accepted "
+            "events only. It does not establish that this key belongs to a trusted issuer "
+            "or may be used for verification."
+        )
+    st.metric(
+        "Key lifecycle state at signing (metadata)",
         result["historical_key_state_at_signing"].replace("_", " ").title(),
     )
+    if not result["timestamp_trusted"]:
+        st.info(
+            "Signing-time ordering is not established. The historical key state must be "
+            "treated as unknown, regardless of the manually supplied date."
+        )
     st.caption(
         f'Trusted signing time: {"Yes" if result["timestamp_trusted"] else "No"} · '
         f'Trusted lifecycle events: {result["trusted_event_count"]} · '
