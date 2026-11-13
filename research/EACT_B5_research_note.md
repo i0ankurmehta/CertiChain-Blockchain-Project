@@ -43,7 +43,7 @@ The initial evaluation comprises ten authored synthetic fixtures and unit tests.
 
 ### 7. Results
 
-**Pending.** Do not insert a fixture pass rate or privacy improvement claim until the test suite and local UI scenarios have been executed and recorded.
+**Initial automated result (13 November 2026):** GitHub Actions passed 61 tests across the repository, including 19 B5 tests. The B5 all-fixture conformance test passed for all ten authored scenarios, and Python compilation of the new Streamlit page passed. The results tracker records expected and observed engine dispositions as matching under CI. This is deterministic fixture conformance, not a user study, local visual UI review, cryptographic validation or real-world privacy-accuracy result. Local UI walkthrough is still pending.
 
 ### 8. Limitations
 
