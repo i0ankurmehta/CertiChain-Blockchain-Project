@@ -113,7 +113,7 @@ The audit-chain test suite separately checks valid chains, record tampering, lin
 4. Record primary disposition, current key state, historical key state at signing, and all independent findings.
 5. Change an event or timestamp input and verify that the page marks the configuration as modified.
 6. Use the audit-tampering checkbox to observe detection of an altered record.
-7. Record outputs in `EACT_B4_results_template.csv`.
+7. Record outputs in `EACT_B4_results_template.csv` and compare the observed primary disposition with the expected fixture disposition.\n8. Distinguish trust-registry status from the date/event-derived key lifecycle state; a date-derived Active label does not establish issuer trust.\n9. Record audit-chain tampering separately from credential lifecycle findings.
 
 ## 7. Measures
 
@@ -137,3 +137,8 @@ The audit-chain test suite separately checks valid chains, record tampering, lin
 ## 9. Expected contribution
 
 B4 tests whether the prototype can separate the key's present state from a historical signature's state at signing time, while preserving the chronology and provenance of lifecycle events. It also provides a first audit-chain tamper-detection demonstration. This prepares the research for later work on cryptographic trust anchors, independently verifiable signed events, archival signatures and governance approval workflows.
+
+
+## 10. Observed results
+
+All ten scenarios B4-01 through B4-10 were visually exercised in the local Streamlit UI using user-supplied screenshots. The observed primary dispositions matched the expected fixture dispositions (10/10 UI fixture conformance). The case-by-case results, lifecycle states, finding counts and limitations are documented in `EACT_B4_observed_results.md` and `EACT_B4_results_template.csv`. This is manual UI evidence against authored synthetic rules, not a real-world accuracy or cryptographic validation result.
