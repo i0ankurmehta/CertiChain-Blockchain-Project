@@ -1,0 +1,21 @@
+# Local Streamlit configuration and credentials
+.streamlit/secrets.toml
+
+# Python build/runtime artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local virtual environments
+.venv/
+venv/
+env/
+
+# Local environment variables
+.env
+.env.*
+!.env.example

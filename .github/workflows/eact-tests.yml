@@ -7,6 +7,8 @@ on:
       - "eact_provenance.py"
       - "eact_trust_lifecycle.py"
       - "eact_privacy.py"
+      - "eact_sdjwt.py"
+      - ".gitignore"
       - "pages/**"
       - "tests/**"
       - "research/verification_scenarios.json"
@@ -14,6 +16,8 @@ on:
       - "research/EACT_B3_provenance_scenarios.json"
       - "research/EACT_B4_trust_lifecycle_scenarios.json"
       - "research/EACT_B5_privacy_scenarios.json"
+      - "research/EACT_B6_protocol.md"
+      - "research/EACT_B6_research_note.md"
       - ".github/workflows/eact-tests.yml"
   push:
     branches:
@@ -21,6 +25,7 @@ on:
       - "feature/eact-b3-provenance-freshness"
       - "feature/eact-b4-trust-anchor-lifecycle"
       - "feature/eact-b5-privacy-preserving-disclosure"
+      - "feature/eact-b6-sd-jwt-online-connectors"
 
 jobs:
   unit-tests:
@@ -35,10 +40,12 @@ jobs:
           python-version: "3.11"
 
       - name: Install app dependencies
-        run: python -m pip install --upgrade pip streamlit pandas
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt pandas
 
       - name: Compile Python source and Streamlit pages
-        run: python -m compileall -q app.py eact_rules.py eact_provenance.py eact_trust_lifecycle.py eact_privacy.py pages tests
+        run: python -m compileall -q app.py eact_rules.py eact_provenance.py eact_trust_lifecycle.py eact_privacy.py eact_sdjwt.py pages tests
 
       - name: Run EACT unit tests
         run: python -m unittest discover -s tests -v
