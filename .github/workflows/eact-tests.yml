@@ -8,6 +8,7 @@ on:
       - "eact_trust_lifecycle.py"
       - "eact_privacy.py"
       - "eact_sdjwt.py"
+      - ".gitignore"
       - "pages/**"
       - "tests/**"
       - "research/verification_scenarios.json"
