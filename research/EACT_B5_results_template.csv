@@ -1,0 +1,11 @@
+case_id,scenario,expected_disposition,observed_disposition,fixture_match,proposed_claim_count,minimum_claim_count,high_sensitivity_claim_count,exposure_reduction_percent,finding_codes,notes
+B5-01,"Minimum degree proof for employment",minimum_disclosure_sufficient,,,,,,,,
+B5-02,"Employer asks for the entire academic record",sufficient_evidence_with_privacy_warnings,,,,,,,,
+B5-03,"Scholarship threshold without revealing raw CGPA",minimum_disclosure_sufficient,,,,,,,,
+B5-04,"Internship checks current enrollment",minimum_disclosure_sufficient,,,,,,,,
+B5-05,"Holder withholds a required claim",insufficient_evidence_or_consent,,,,,,,,
+B5-06,"Unscoped candidate profiling request",purpose_not_supported,,,,,,,,
+B5-07,"Global student ID requested by an employer",sufficient_evidence_with_privacy_warnings,,,,,,,,
+B5-08,"Same global identifier links two verifiers",sufficient_evidence_with_privacy_warnings,,,,,,,,
+B5-09,"Academic attributes combine into a fingerprint",sufficient_evidence_with_privacy_warnings,,,,,,,,
+B5-10,"Secondary use and unspecified retention",secondary_use_requires_review,,,,,,,,
