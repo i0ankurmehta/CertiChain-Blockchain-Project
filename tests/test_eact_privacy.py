@@ -83,6 +83,7 @@ class EACTB5FixtureTests(unittest.TestCase):
         self.assertEqual(result["disposition"], "purpose_not_supported")
         self.assertEqual(result["proposed_claims"], {})
         self.assertFalse(result["can_verify_purpose"])
+        self.assertFalse(result["exposure_reduction_assessed"])
 
     def test_global_identifier_is_flagged_even_when_consent_is_given(self):
         result = evaluate_disclosure_request(self.by_id["B5-07"])
@@ -107,6 +108,7 @@ class EACTB5FixtureTests(unittest.TestCase):
         self.assertIn("secondary_use_mismatch", codes)
         self.assertIn("retention_not_specified", codes)
         self.assertFalse(result["can_verify_purpose"])
+        self.assertTrue(result["exposure_reduction_assessed"])
 
     def test_untrusted_issuer_blocks_any_presentation_proposal(self):
         result = evaluate_disclosure_request(
@@ -114,6 +116,7 @@ class EACTB5FixtureTests(unittest.TestCase):
         )
         self.assertEqual(result["disposition"], "issuer_trust_not_established")
         self.assertEqual(result["proposed_claims"], {})
+        self.assertFalse(result["exposure_reduction_assessed"])
 
     def test_non_active_credential_status_blocks_presentation(self):
         result = evaluate_disclosure_request(
@@ -121,6 +124,7 @@ class EACTB5FixtureTests(unittest.TestCase):
         )
         self.assertEqual(result["disposition"], "credential_status_not_active")
         self.assertEqual(result["proposed_claims"], {})
+        self.assertFalse(result["exposure_reduction_assessed"])
 
     def test_approved_but_unrequested_claim_is_not_disclosed(self):
         result = evaluate_disclosure_request(
@@ -157,6 +161,7 @@ class EACTB5FixtureTests(unittest.TestCase):
             result["full_credential_exposure_units"],
         )
         self.assertGreater(result["exposure_reduction_percent"], 0.0)
+        self.assertTrue(result["exposure_reduction_assessed"])
 
     def test_claim_catalog_contains_only_known_synthetic_attributes(self):
         result = evaluate_disclosure_request(self.by_id["B5-01"])
