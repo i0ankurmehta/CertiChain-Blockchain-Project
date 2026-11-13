@@ -1,11 +1,11 @@
 case_id,scenario,expected_disposition,observed_disposition,ui_result_match,current_key_state,historical_key_state_at_signing,finding_count,notes
-B4-01,"Active key and current credential signature",active_key_historical_signature_valid,,,active,,,Not yet captured
-B4-02,"Old key rotated after credential signing",historical_signature_predates_rotation,,,rotated,,,Not yet captured
-B4-03,"Credential signed after routine key rotation",key_rotated_before_signing,,,rotated,,,Not yet captured
-B4-04,"Key compromise effective before signature, reported later",key_compromised_at_signing,,,compromised,,,Not yet captured
-B4-05,"Historical signature predates later key compromise",historical_signature_predates_compromise,,,active,,,Not yet captured
-B4-06,"Expired key, signature timestamped before expiry",historically_valid_key_now_expired,,,expired,,,Not yet captured
-B4-07,"Credential signed after key expiry",key_expired_at_signing,,,expired,,,Not yet captured
-B4-08,"Unverified manual claim says the key was revoked",lifecycle_event_unverified,,,active,,,Not yet captured
-B4-09,"Credential references an unknown trust anchor",trust_anchor_not_established,,,active,,,Not yet captured
-B4-10,"Compromise event exists but signing timestamp is untrusted",trusted_signing_time_not_established,,,active,,,Not yet captured
+"B4-01","Active key and current credential signature",active_key_historical_signature_valid,active_key_historical_signature_valid,yes,active,active,0,"Screenshot observed: trusted anchor; active now and at signing; trusted timestamp; no lifecycle findings. Audit-tampering checkbox was enabled separately in this screenshot, so the audit-chain red alert is not a lifecycle finding."
+"B4-02","Old key rotated after credential signing",historical_signature_predates_rotation,historical_signature_predates_rotation,yes,rotated,pre_rotation,1,"Screenshot observed: current key rotated; signing preceded rotation; one informational historical-rotation finding."
+"B4-03","Credential signed after routine key rotation",key_rotated_before_signing,key_rotated_before_signing,yes,rotated,rotated,1,"Screenshot observed: signing followed rotation; one critical key-lifecycle finding."
+"B4-04","Key compromise effective before signature, reported later",key_compromised_at_signing,key_compromised_at_signing,yes,compromised,compromised,2,"Screenshot observed: compromise effective before signing and reported later; both chronology and compromise-at-signing findings shown."
+"B4-05","Historical signature predates later key compromise",historical_signature_predates_compromise,historical_signature_predates_compromise,yes,compromised,pre_compromise,2,"Screenshot observed: trusted timestamp predates compromise effective time; delayed-report chronology and historical pre-compromise findings shown."
+"B4-06","Expired key, signature timestamped before expiry",historically_valid_key_now_expired,historically_valid_key_now_expired,yes,expired,active,0,"Screenshot observed: key is currently expired, but was within its validity interval at trusted signing time; no lifecycle findings."
+"B4-07","Credential signed after key expiry",key_expired_at_signing,key_expired_at_signing,yes,expired,expired,1,"Screenshot observed: signature timestamp after expiry; one critical validity-interval finding."
+"B4-08","Unverified manual claim says the key was revoked",lifecycle_event_unverified,lifecycle_event_unverified,yes,active,active,1,"Screenshot observed: manual revocation claim was untrusted; one warning; zero trusted lifecycle events and one unverified event."
+"B4-09","Credential references an unknown trust anchor",trust_anchor_not_established,trust_anchor_not_established,yes,active (date-derived),active (date-derived),1,"Screenshot observed: trust anchor not established, although supplied validity dates imply active lifecycle state. UI refinement added to separate trust-registry status from metadata-derived lifecycle state."
+"B4-10","Compromise event exists but signing timestamp is untrusted",trusted_signing_time_not_established,trusted_signing_time_not_established,yes,compromised,unknown,2,"Screenshot observed: client-clock timestamp not trusted; signing-time state unknown; delayed compromise-report chronology separately surfaced."
