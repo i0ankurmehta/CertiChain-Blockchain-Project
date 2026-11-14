@@ -267,6 +267,30 @@ def _assess_claim(
             "conflict_pairs": [],
         }
 
+    explicit_contradictions = [
+        item for item in qualified
+        if _period_contains(item, claim) is True
+        and _normalise(item.get("value")) != _normalise(claim.get("expected_value"))
+        and item.get("explicitly_excludes_claim") is True
+    ]
+    if explicit_contradictions:
+        ids = sorted({
+            str(item.get("evidence_id", ""))
+            for item in explicit_contradictions if item.get("evidence_id")
+        })
+        return {
+            "claim_id": claim.get("claim_id"),
+            "scope": claim.get("scope"),
+            "outcome": EV02,
+            "label": OUTCOME_LABELS[EV02],
+            "evidence_ids": ids,
+            "explanation": (
+                "Reviewed, claim-appropriate evidence explicitly states a different status "
+                "for the relevant date/session."
+            ),
+            "conflict_pairs": [],
+        }
+
     if supporting:
         return {
             "claim_id": claim.get("claim_id"),
