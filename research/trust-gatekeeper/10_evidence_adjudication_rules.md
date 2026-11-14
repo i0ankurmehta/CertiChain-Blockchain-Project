@@ -86,7 +86,7 @@ Apply the following primary-outcome precedence after the intake gate:
 2. **EV-04 — Source conflict:** use when comparable in-scope evidence makes incompatible claims and the conflict remains unresolved.
 3. **EV-02 — Temporal mismatch:** use when valid-time evidence explicitly excludes the relevant claimed period.
 4. **EV-03 — Entity ambiguity:** use when an essential entity or relationship cannot be resolved.
-5. **EV-05 — Evidence insufficient:** use when evidence required for the scoped question is absent, undated, out of scope, non-authoritative for that claim, or otherwise insufficient.
+5. **EV-05 — Evidence insufficient:** use when the relevant entities are sufficiently resolved but evidence required for the scoped question is absent, undated, out of scope, non-authoritative for that claim, or otherwise insufficient.
 6. **EV-06 — Document/record mismatch:** use as primary only when no higher-priority unresolved evidence finding exists; otherwise retain it as a secondary finding.
 7. **EV-01 — Evidence consistent:** use only if the required scope checks pass and none of EV-02 through EV-07 applies.
 
