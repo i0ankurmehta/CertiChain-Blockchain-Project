@@ -21,6 +21,7 @@ on:
       - ".github/workflows/eact-tests.yml"
   push:
     branches:
+      - "main"
       - "feature/eact-v2-multi-finding"
       - "feature/eact-b3-provenance-freshness"
       - "feature/eact-b4-trust-anchor-lifecycle"
