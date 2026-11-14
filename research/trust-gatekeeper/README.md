@@ -1,6 +1,6 @@
 # CertiChain Trust Gatekeeper — Research Track
 
-**Track status:** Rules engine v0.1 and synthetic demonstration UI  
+**Track status:** Rules engine v0.1, synthetic demo UI and 23 passing unit tests  
 **Date:** 14 November 2026  
 **Market under study:** Indian background-verification (BGV) providers  
 **Inputs:** Scanned academic documents and structured records  
