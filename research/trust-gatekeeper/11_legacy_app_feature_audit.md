@@ -107,12 +107,15 @@ The following must happen in order:
 - [ ] Preserve the user's uploaded local-only `app.py` edits separately before syncing; the upload is not byte-identical to remote `main`.
 
 ### Phase D — Minimal vertical slice
-Build only one end-to-end synthetic case:
-- scan/structured intake;
-- extraction and reconciliation;
-- temporal/provenance evidence record;
-- deterministic TG-RULES-001 assessment;
-- evidence report and audit trail.
+- [x] Add deterministic `tg_rules.py` based on TG-RULES-001 v0.1.
+- [x] Add three synthetic case fixtures in `tg_demo_cases.py`.
+- [x] Add a minimal Trust Gatekeeper Streamlit view showing case claims, scope outcomes, source lineage, unresolved questions and a JSON report export.
+- [x] Add 23 unit tests covering intake gates, field mismatch, OCR confidence, temporal coverage, explicit status contradictions, source conflicts/dependencies and award-verification boundaries.
+- [x] Add a GitHub Actions workflow for compile checks and Trust Gatekeeper unit tests.
+- [ ] Implement actual CSV/JSON credential-case intake.
+- [ ] Implement actual PDF/image handling and OCR; current scan-related comparisons are precomputed synthetic fixture values.
+- [ ] Implement the graph timeline/visualisation and source-record authoring workflow.
+- [ ] Validate the full vertical slice against the 240-case benchmark protocol.
 
 Do not add live source fetching, production candidate data, cryptographic wallets or blockchain mechanics in this slice.
 
@@ -126,6 +129,7 @@ Do not add live source fetching, production candidate data, cryptographic wallet
 - The original remote `main` ledger entrypoint was preserved at `archive/legacy_ledger_app_main.py`.
 - The research branch root `app.py` is now the Trust Gatekeeper synthetic-case interface.
 - `requirements.txt` now lists only Streamlit for the active app.
+- The old EACT GitHub Actions workflow was archived and replaced with `.github/workflows/trust-gatekeeper-tests.yml`.
 - The original `main` branch was not changed.
 
 ### Local-only uploaded app safeguard
@@ -134,14 +138,14 @@ The user uploaded a local `app.py` snapshot for this transition. It is 25,095 by
 
 ## 7. Cleanup acceptance criteria
 
-The cleanup is complete only when:
-- no legacy EACT lab appears in the active Trust Gatekeeper navigation;
-- no proof-of-work miner or tampering simulation appears in the Trust Gatekeeper analyst workflow;
-- no manual credential-issuance form appears;
-- the new UI has only the five primary areas in Section 4;
-- old EACT research remains accessible in an archive/history location;
-- imports and dependencies are minimised without breaking the new tests;
-- the synthetic end-to-end case passes the TG-RULES-001 tests;
+The legacy-feature retirement on this branch is complete when:
+- no legacy EACT lab appears in active Streamlit navigation;
+- no proof-of-work miner, ledger explorer, tampering simulation or manual award-issuance form appears in the active Trust Gatekeeper workflow;
+- EACT pages, modules, tests, old synthetic ledger data and the original remote-main ledger entrypoint are preserved in `archive/`;
+- active dependencies are limited to Streamlit;
+- the new rules engine has a passing unit-test suite and a dedicated CI workflow;
 - the original legacy `main` remains recoverable.
+
+The full intended analyst workflow is **not yet complete**: real case intake, OCR, graph timeline/visualisation and end-to-end benchmark evaluation remain open work.
 
 **Decision:** retain the legacy app as historical reference on `main`, and make the research branch the clean future Trust Gatekeeper product direction. Do not mix both sets of concepts in the active analyst workflow.
