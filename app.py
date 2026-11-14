@@ -482,7 +482,6 @@ with st.sidebar:
                 st.session_state.imported_source_mode = None
                 st.rerun()
 
-    else:
     with st.expander("Ledger tools"):
         if active_chain is not None and len(active_chain) > 1:
             block_idx = st.number_input(
@@ -554,14 +553,14 @@ st.dataframe(
     hide_index=True,
 )
 
-with st.expander("Block details"):
-    for block in active_chain:
-        tampered = block.index in broken_blocks
-        with st.expander(f"Block #{block.index} · {'Tampered' if tampered else 'Valid'}"):
-            st.caption(f"Timestamp: {block.timestamp} · Nonce: {block.nonce}")
-            st.code(
-                f"Previous hash: {block.previous_hash}\n"
-                f"Stored hash: {block.hash}\n"
-                f"Calculated hash: {block.calculate_hash()}",
-                language="text",
-            )
+st.subheader("Block details")
+for block in active_chain:
+    tampered = block.index in broken_blocks
+    with st.expander(f"Block #{block.index} · {'Tampered' if tampered else 'Valid'}"):
+        st.caption(f"Timestamp: {block.timestamp} · Nonce: {block.nonce}")
+        st.code(
+            f"Previous hash: {block.previous_hash}\n"
+            f"Stored hash: {block.hash}\n"
+            f"Calculated hash: {block.calculate_hash()}",
+            language="text",
+        )
