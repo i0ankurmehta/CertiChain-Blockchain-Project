@@ -26,6 +26,8 @@ This is not another credential repository, issuing service, blockchain ledger, o
 | [07 — Analyst case-handling checklist](07_analyst_case_handling_checklist.md) | Practical case-by-case checklist aligned to the operational standard |
 | [08 — Worked synthetic case](08_worked_synthetic_case.md) | End-to-end affiliation transition example with evidence register, temporal analysis and escalation |
 | [09 — Worked temporal approval case](09_worked_synthetic_case_temporal_approval.md) | Later-session programme approval, current-status trap, source dependency and scoped abstention |
+| [10 — Evidence adjudication rules](10_evidence_adjudication_rules.md) | Deterministic scope-specific outcomes, temporal/source rules, precedence, abstention and unit-test requirements |
+| [11 — Legacy application feature audit](11_legacy_app_feature_audit.md) | Keep/archive/retire decisions for the old ledger and EACT experiments, with safe cleanup sequencing |
 
 ## Decision record
 
