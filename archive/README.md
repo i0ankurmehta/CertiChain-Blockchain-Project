@@ -6,6 +6,8 @@ This folder preserves code and fixtures from the earlier CertiChain blockchain-l
 
 - `legacy_ledger_app_main.py`: the original remote `main` version of the blockchain-ledger Streamlit entrypoint.
 - `legacy_ledger/data/synthetic_records.json`: old fictional ledger demo records.
+- `legacy_ledger/CertiChain.ipynb`: original Colab blockchain-ledger notebook.
+- `legacy_ledger/README_SYNTHETIC_MODE.md`: documentation for the retired synthetic-ledger toggle.
 - `legacy_eact_pages/`: five former Streamlit experiment pages, now removed from active navigation.
 - `legacy_eact_modules/`: prior EACT rules, provenance, trust lifecycle, privacy and SD-JWT logic.
 - `legacy_eact_tests/`: tests for those historical EACT modules.
