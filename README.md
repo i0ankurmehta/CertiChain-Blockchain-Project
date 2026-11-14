@@ -37,7 +37,7 @@ The Streamlit interface currently runs prebuilt synthetic cases and displays the
 python3 -m unittest discover -s tests -v
 ```
 
-Expected current result: **22 tests pass**.
+Expected current result: **23 tests pass**.
 
 ## Legacy experiments
 
