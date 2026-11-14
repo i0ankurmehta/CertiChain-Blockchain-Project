@@ -28,6 +28,7 @@ This is not another credential repository, issuing service, blockchain ledger, o
 | [09 — Worked temporal approval case](09_worked_synthetic_case_temporal_approval.md) | Later-session programme approval, current-status trap, source dependency and scoped abstention |
 | [10 — Evidence adjudication rules](10_evidence_adjudication_rules.md) | Deterministic scope-specific outcomes, temporal/source rules, precedence, abstention and unit-test requirements |
 | [11 — Legacy application feature audit](11_legacy_app_feature_audit.md) | Keep/archive/retire decisions for the old ledger and EACT experiments, with safe cleanup sequencing |
+| [Legacy EACT page archive](../../archive/legacy_eact_pages/) | Five former Streamlit lab pages retained as source history and removed from active navigation on this branch |
 
 ## Decision record
 
