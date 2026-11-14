@@ -138,7 +138,7 @@ The analyst links:
 
 **Provenance check:** SYN-E03 is not an independent confirmation of SYN-E02. It reproduces the later affiliation claim and is marked DERIVED_FROM_KNOWN_SOURCE.
 
-**Result:** Evidence assembled, but insufficient for the award-authority question.
+**Result:** The affiliation facts are assembled, but the responsible awarding entity for the continuing cohort is unresolved; individual award evidence is also absent.
 
 ### State 6 — ANALYST_REVIEW
 
@@ -192,7 +192,7 @@ A general institution-recognition page or a third-party directory is not enough 
 
 **Case:** TG-DEMO-001  
 **Preliminary outcome:** Evidence insufficient (EV-05)  
-**Secondary issue:** Entity / awarding-authority ambiguity (EV-03)
+**Secondary outcome:** Evidence insufficient (EV-05) for individual award verification.
 
 **Finding:** The submitted scan and structured case record agree on the candidate's stated institution, college, programme and dates. The synthetic evidence set records Northbridge College as affiliated with Aster State University for sessions 2020–21 and 2021–22, and with Meridian University from session 2022–23. The provided later directory entry derives from the Meridian affiliation notification and is not independent corroboration.
 
@@ -237,7 +237,7 @@ The prototype passes this case only if it:
 - [ ] distinguishes affiliation evidence from individual award verification;
 - [ ] records SYN-E03 as dependent on SYN-E02;
 - [ ] avoids treating matching scan/JSON fields as proof of authenticity;
-- [ ] returns EV-05 as the primary outcome;
+- [ ] returns EV-03 as the primary outcome, with EV-05 for the separate individual-award scope;
 - [ ] explains EV-03 as a secondary ambiguity;
 - [ ] does not incorrectly return EV-02 or EV-04;
 - [ ] generates a specific escalation question;
