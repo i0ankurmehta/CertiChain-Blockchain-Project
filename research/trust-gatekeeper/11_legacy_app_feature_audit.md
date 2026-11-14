@@ -48,7 +48,7 @@ Publicly visible functions in the inspected version:
 - `eact_sdjwt.py`: selective-disclosure credential functions.
 - `tests/test_eact_*.py`: regression tests for those experiments.
 
-These modules and tests should be retained as historical research and not imported into the new TG engine without an explicit design review. Renaming or deleting them now would destroy useful evidence of prior experiments and may make it difficult to reproduce prior project results.
+These modules and tests have been copied byte-for-byte into `archive/legacy_eact_modules/` and `archive/legacy_eact_tests/` on the research branch, then removed from the active import/test paths. Their source and test history remains available. Do not import them into the new TG engine without an explicit design review.
 
 ## 3. Feature disposition
 
@@ -99,10 +99,12 @@ The following must happen in order:
 
 ### Phase C — Retire old active UI
 - [x] Move the five EACT pages out of active Streamlit navigation into `archive/legacy_eact_pages/`.
-- [ ] Safely inspect and back up the local `app.py` change before changing the legacy ledger entrypoint.
-- [ ] Move the old ledger entrypoint to a clearly labelled legacy/archive location, or preserve it on the original main branch.
-- [ ] Create the new Trust Gatekeeper entrypoint.
-- [ ] Remove dependencies only after a code/import/test scan proves they are no longer required by the new entrypoint.
+- [x] Preserve the original remote `main` ledger entrypoint at `archive/legacy_ledger_app_main.py`.
+- [x] Replace the research branch root `app.py` with the minimal Trust Gatekeeper synthetic-case interface.
+- [x] Archive the EACT backend modules and regression tests outside the active import/test paths.
+- [x] Archive the former ledger synthetic-record fixture.
+- [x] Reduce active `requirements.txt` to Streamlit only after archiving the unused JWT/requests-dependent modules.
+- [ ] Preserve the user's uploaded local-only `app.py` edits separately before syncing; the upload is not byte-identical to remote `main`.
 
 ### Phase D — Minimal vertical slice
 Build only one end-to-end synthetic case:
@@ -117,18 +119,18 @@ Do not add live source fetching, production candidate data, cryptographic wallet
 ## 6. Cleanup actions performed and local working-copy safeguard
 
 ### Completed on the research branch
-- All five legacy EACT Streamlit page files were copied byte-for-byte into `archive/legacy_eact_pages/`.
-- The five originals were removed from the active `pages/` directory, so they no longer appear in Streamlit's multipage navigation on this branch.
-- The archived code, original EACT backend modules, tests and protocol/results documents remain available for historical reproducibility.
-- The `main` branch was not changed.
+- All five legacy EACT Streamlit page files were copied to `archive/legacy_eact_pages/` and removed from active navigation.
+- The five EACT backend modules were copied to `archive/legacy_eact_modules/` and removed from the active import path.
+- The five EACT regression tests were copied to `archive/legacy_eact_tests/`; `tests/` now contains the new Trust Gatekeeper rules tests.
+- The old synthetic ledger dataset was preserved at `archive/legacy_ledger/data/synthetic_records.json`.
+- The original remote `main` ledger entrypoint was preserved at `archive/legacy_ledger_app_main.py`.
+- The research branch root `app.py` is now the Trust Gatekeeper synthetic-case interface.
+- `requirements.txt` now lists only Streamlit for the active app.
+- The original `main` branch was not changed.
 
-### Pending: main `app.py` and legacy helper functions
+### Local-only uploaded app safeguard
 
-The screenshot supplied on 14 November 2026 showed `M app.py` after switching branches. This indicates a local modification not present in the GitHub remote branch at that time. The actual local file content is not available for inspection.
-
-The current remote `app.py` still contains the legacy ledger entrypoint, proof-of-work chain creation, manual credential issuance, import/reset controls, block explorer and simulated tampering controls. Those functions are marked for retirement from the future Trust Gatekeeper product, but are **not yet removed**.
-
-A remote replacement or deletion of `app.py` could conflict with the local modification or cause work to be lost. Therefore this audit makes **no change to `app.py` or its helper functions** until the local file is inspected and safely backed up. The current main screen remains a legacy ledger demonstration on this branch for now.
+The user uploaded a local `app.py` snapshot for this transition. It is 25,095 bytes / 599 lines and is not byte-identical to the remote `main` app; the remote `main` version was archived separately. The uploaded local snapshot remains in the conversation attachment and the user's working copy. Before syncing, the user must create a separate local backup and stash the working changes. Do not pop the stash over the new Trust Gatekeeper `app.py` without reviewing it.
 
 ## 7. Cleanup acceptance criteria
 
