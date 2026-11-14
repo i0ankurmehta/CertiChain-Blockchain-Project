@@ -340,10 +340,6 @@ with st.sidebar:
                 st.stop()
 
         st.caption(f"{st.session_state.synthetic_dataset_name} · fictional")
-        if st.button("Reset demo", use_container_width=True):
-            dataset = load_synthetic_dataset()
-            st.session_state.synthetic_chain = create_chain_from_records(dataset["records"])
-            st.rerun()
 
     elif data_source == "Upload CSV / JSON":
         st.caption("CSV or JSON · max 2 MB")
