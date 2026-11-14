@@ -23,6 +23,8 @@ This is not another credential repository, issuing service, blockchain ledger, o
 | [04 — Synthetic benchmark protocol](04_synthetic_benchmark_protocol.md) | Dataset design, labels, baselines, metrics and validity safeguards |
 | [05 — First-stage research plan](05_first_stage_research_plan.md) | Work sequence, gates and evidence required before application changes |
 | [06 — Operational standards](06_operational_standards.md) | Case lifecycle, source classes, temporal checks, dispositions, escalation, privacy, security and release gates |
+| [07 — Analyst case-handling checklist](07_analyst_case_handling_checklist.md) | Practical case-by-case checklist aligned to the operational standard |
+| [08 — Worked synthetic case](08_worked_synthetic_case.md) | End-to-end affiliation transition example with evidence register, temporal analysis and escalation |
 
 ## Decision record
 
