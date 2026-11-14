@@ -14,7 +14,7 @@ from pathlib import Path
 import streamlit as st
 
 
-st.set_page_config(page_title="CertiChain", page_icon="🎓", layout="wide")
+st.set_page_config(page_title="CertiChain - University Ledger", layout="wide")
 
 DIFFICULTY = 3
 MAX_IMPORT_BYTES = 2 * 1024 * 1024  # 2 MB
@@ -23,9 +23,9 @@ SYNTHETIC_DATA_PATH = Path(__file__).parent / "data" / "synthetic_records.json"
 REQUIRED_FIELDS = {"student_name", "roll_no", "course", "cgpa"}
 DATA_SOURCE_OPTIONS = [
     "Manual entry",
-    "Synthetic demo",
+    "Repository synthetic records",
     "Upload CSV / JSON",
-    "Online JSON",
+    "Approved online JSON endpoint",
 ]
 
 
@@ -323,13 +323,21 @@ def initialise_session_state():
 
 initialise_session_state()
 
-st.title("CertiChain")
-st.caption("Academic credential ledger")
+st.title("🎓 CertiChain: Academic Credential Ledger")
+st.caption("A local blockchain demonstration for academic credential records")
 
 with st.sidebar:
-    data_source = st.selectbox("Data source", DATA_SOURCE_OPTIONS)
+    st.header("Data source")
+    data_source = st.selectbox(
+        "Choose where the records come from",
+        DATA_SOURCE_OPTIONS,
+        help=(
+            "All sources feed the same local ledger view. Imported records are kept in this "
+            "Streamlit session and are not automatically authenticated by the issuer."
+        ),
+    )
 
-    if data_source == "Synthetic demo":
+    if data_source == "Repository synthetic records":
         if st.session_state.synthetic_chain is None:
             try:
                 dataset = load_synthetic_dataset()
@@ -339,12 +347,18 @@ with st.sidebar:
                 st.error(f"Could not load synthetic records: {error}")
                 st.stop()
 
-        st.caption(f"{st.session_state.synthetic_dataset_name} · fictional")
+        st.success("Fictional demo records loaded")
+        st.caption(st.session_state.synthetic_dataset_name)
+        st.caption("These records are fictional and are not university records.")
+        if st.button("Rebuild demo ledger", use_container_width=True):
+            dataset = load_synthetic_dataset()
+            st.session_state.synthetic_chain = create_chain_from_records(dataset["records"])
+            st.rerun()
 
     elif data_source == "Upload CSV / JSON":
-        st.caption("CSV or JSON · max 2 MB")
+        st.caption("Import a file from an authorised source. Maximum size: 2 MB.")
         uploaded_file = st.file_uploader(
-            "Select file",
+            "Choose a CSV or JSON file",
             type=["csv", "json"],
             key="external_data_upload",
         )
@@ -370,7 +384,7 @@ with st.sidebar:
                         st.session_state.imported_dataset_name = f"{dataset_name} — {uploaded_file.name}"
                         st.session_state.imported_source_digest = digest
                         st.session_state.imported_source_mode = data_source
-                        st.success(f"Imported {len(records)} records.")
+                        st.success(f"Imported {len(records)} record(s) into a separate session ledger.")
                     except (UnicodeDecodeError, json.JSONDecodeError, ValueError, TypeError) as error:
                         st.session_state.imported_records = None
                         st.session_state.imported_chain = None
@@ -379,25 +393,34 @@ with st.sidebar:
                         st.session_state.imported_source_mode = data_source
                         st.error(f"Could not import file: {error}")
 
-    elif data_source == "Online JSON":
+        if (
+            st.session_state.imported_source_mode == data_source
+            and st.session_state.imported_chain is not None
+        ):
+            st.info("External file imported. The local chain checks record integrity, not issuer authenticity.")
+            st.caption(st.session_state.imported_dataset_name)
+        else:
+            st.caption("No file is loaded for this source choice. Previously imported data remains in the session until cleared.")
+
+    elif data_source == "Approved online JSON endpoint":
+        st.caption("Fetch JSON only from an HTTPS host that you explicitly allow-list.")
         allowed_hosts = get_allowed_source_hosts()
         if not allowed_hosts:
-            st.warning("No approved hosts configured.")
-            with st.expander("Configure approved hosts"):
-                st.code(
-                    '[certichain]\nallowed_source_hosts = ["issuer.example.edu"]',
-                    language="toml",
-                )
-                st.caption("Save in .streamlit/secrets.toml. Keep this file private.")
+            st.warning("No online hosts are approved yet. Configure the local allow-list first.")
+            st.code(
+                '[certichain]\nallowed_source_hosts = ["issuer.example.edu"]',
+                language="toml",
+            )
+            st.caption("Add this to .streamlit/secrets.toml locally. Do not commit that file to GitHub.")
         else:
-            st.caption("Approved: " + ", ".join(sorted(allowed_hosts)))
+            st.caption("Approved hosts: " + ", ".join(sorted(allowed_hosts)))
 
         with st.form("online_source_form"):
             source_url = st.text_input(
-                "HTTPS JSON URL",
-                placeholder="https://issuer.example.edu/records.json",
+                "Issuer-hosted JSON endpoint",
+                placeholder="https://issuer.example.edu/api/credentials/record.json",
             )
-            fetch_submitted = st.form_submit_button("Fetch")
+            fetch_submitted = st.form_submit_button("Fetch approved source")
 
         if fetch_submitted:
             try:
@@ -410,28 +433,32 @@ with st.sidebar:
                 st.session_state.imported_dataset_name = f"{dataset_name} — {urllib.parse.urlsplit(source_url).hostname}"
                 st.session_state.imported_source_digest = source_digest
                 st.session_state.imported_source_mode = data_source
-                st.success(f"Fetched {len(records)} records.")
+                st.success(f"Fetched {len(records)} record(s) into a separate session ledger.")
             except (ValueError, TypeError) as error:
                 st.error(f"Online import stopped: {error}")
+
+        if st.session_state.imported_source_mode == data_source and st.session_state.imported_chain is not None:
+            st.info("Fetched data is not automatically issuer-verified. Independent trust checks are still required.")
+            st.caption(st.session_state.imported_dataset_name)
 
     st.divider()
 
     # Select the ledger without merging or overwriting the other sources.
-    if data_source == "Synthetic demo":
+    if data_source == "Repository synthetic records":
         active_chain = st.session_state.synthetic_chain
-        ledger_label = "Synthetic demo"
-    elif data_source in ("Upload CSV / JSON", "Online JSON"):
+        ledger_label = "Repository synthetic demonstration ledger"
+    elif data_source in ("Upload CSV / JSON", "Approved online JSON endpoint"):
         if st.session_state.imported_source_mode == data_source:
             active_chain = st.session_state.imported_chain
         else:
             active_chain = None
-        ledger_label = "Imported data"
+        ledger_label = "Imported external-data ledger"
     else:
         active_chain = st.session_state.manual_chain
-        ledger_label = "Manual"
+        ledger_label = "Manual ledger"
 
     if data_source == "Manual entry":
-        st.header("Add record")
+        st.header("Add a credential record")
         with st.form("issue_form", clear_on_submit=True):
             name = st.text_input("Student name", placeholder="e.g., Rohan Sharma")
             roll = st.text_input("Roll number", placeholder="e.g., BCA2401")
@@ -439,7 +466,7 @@ with st.sidebar:
             cgpa = st.number_input(
                 "CGPA", min_value=0.0, max_value=10.0, value=8.5, step=0.1
             )
-            submitted = st.form_submit_button("Add record")
+            submitted = st.form_submit_button("Add record to manual ledger")
 
         if submitted:
             if not name.strip() or not roll.strip() or not course.strip():
@@ -459,9 +486,13 @@ with st.sidebar:
                 st.success(f"Block #{new_block.index} added to the manual ledger.")
                 st.rerun()
 
-    elif data_source in ("Upload CSV / JSON", "Online JSON"):
-        if active_chain is not None:
-            if st.button("Clear imported data", use_container_width=True):
+    elif data_source in ("Upload CSV / JSON", "Approved online JSON endpoint"):
+        st.header("Imported records")
+        if active_chain is None:
+            st.info("Import a supported file or fetch an approved JSON endpoint to create this ledger.")
+        else:
+            st.caption("Imported records are read-only in this view. Original source data is kept separately from the manual ledger.")
+            if st.button("Clear imported session data", use_container_width=True):
                 st.session_state.imported_chain = None
                 st.session_state.imported_records = None
                 st.session_state.imported_dataset_name = None
@@ -469,85 +500,101 @@ with st.sidebar:
                 st.session_state.imported_source_mode = None
                 st.rerun()
 
-    with st.expander("Ledger tools"):
-        if active_chain is not None and len(active_chain) > 1:
-            block_idx = st.number_input(
-                "Block",
-                min_value=1,
-                max_value=len(active_chain) - 1,
-                step=1,
-                key=f"target_block_{data_source}",
+    else:
+        st.header("Demo controls")
+        st.caption("The repository dataset is fictional and remains separate from manual records.")
+
+    st.divider()
+    st.header("Ledger integrity demonstration")
+    if active_chain is not None and len(active_chain) > 1:
+        block_idx = st.number_input(
+            "Target block number",
+            min_value=1,
+            max_value=len(active_chain) - 1,
+            step=1,
+            key=f"target_block_{data_source}",
+        )
+        fake_cgpa = st.number_input(
+            "Test CGPA value",
+            min_value=0.0,
+            max_value=10.0,
+            value=9.9,
+            step=0.1,
+            key=f"fake_cgpa_{data_source}",
+        )
+        if st.button("Simulate record tampering", use_container_width=True):
+            active_chain[block_idx].certificate_data["cgpa"] = float(fake_cgpa)
+            st.warning(
+                f"Block #{block_idx} was modified without re-mining. The ledger should now fail integrity verification."
             )
-            fake_cgpa = st.number_input(
-                "Test CGPA",
-                min_value=0.0,
-                max_value=10.0,
-                value=9.9,
-                step=0.1,
-                key=f"fake_cgpa_{data_source}",
+            st.rerun()
+    elif active_chain is None:
+        st.caption("Load or import records before running the tampering demonstration.")
+    else:
+        st.caption("Add or import at least one record to test tampering.")
+
+    if data_source == "Manual entry":
+        if st.button("Reset manual ledger", use_container_width=True):
+            st.session_state.manual_chain = [create_genesis_block()]
+            st.rerun()
+    elif data_source == "Repository synthetic records":
+        if st.button("Reset synthetic ledger", use_container_width=True):
+            dataset = load_synthetic_dataset()
+            st.session_state.synthetic_chain = create_chain_from_records(dataset["records"])
+            st.rerun()
+    elif active_chain is not None:
+        if st.button("Rebuild imported ledger", use_container_width=True):
+            st.session_state.imported_chain = create_chain_from_records(
+                st.session_state.imported_records
             )
-            if st.button("Simulate tampering", use_container_width=True):
-                active_chain[block_idx].certificate_data["cgpa"] = float(fake_cgpa)
-                st.rerun()
-
-        if data_source == "Manual entry":
-            if st.button("Reset ledger", use_container_width=True):
-                st.session_state.manual_chain = [create_genesis_block()]
-                st.rerun()
-        elif data_source == "Synthetic demo":
-            if st.button("Reset demo", use_container_width=True):
-                dataset = load_synthetic_dataset()
-                st.session_state.synthetic_chain = create_chain_from_records(dataset["records"])
-                st.rerun()
-        elif active_chain is not None:
-            if st.button("Rebuild ledger", use_container_width=True):
-                st.session_state.imported_chain = create_chain_from_records(
-                    st.session_state.imported_records
-                )
-                st.rerun()
+            st.rerun()
 
 
-st.subheader("Ledger")
+st.subheader("Credential ledger")
+st.caption(f"{ledger_label} • {len(active_chain) if active_chain is not None else 0} blocks")
+
 if active_chain is None:
-    st.info("No records loaded.")
+    st.info("No imported records are loaded. Choose a data source in the sidebar to begin.")
     st.stop()
 
+if data_source == "Repository synthetic records":
+    st.info("🧪 **DEMONSTRATION DATA** — these repository records are fictional.")
+elif data_source in ("Upload CSV / JSON", "Approved online JSON endpoint"):
+    st.warning(
+        "**EXTERNAL DATA IMPORTED — NOT ISSUER-VERIFIED.** The local blockchain checks "
+        "whether displayed block data has changed; it does not prove who issued the credential."
+    )
+
 is_valid, broken_blocks = audit_chain(active_chain)
-metric_cols = st.columns(2)
-metric_cols[0].metric("Blocks", len(active_chain))
-metric_cols[1].metric("Integrity", "Valid" if is_valid else "Tampered")
-if not is_valid:
-    st.error("Integrity check failed.")
 
-if data_source == "Synthetic demo":
-    st.caption("Fictional demo data")
-elif data_source in ("Upload CSV / JSON", "Online JSON"):
-    st.caption("External data · not issuer-verified")
+if is_valid:
+    if len(active_chain) == 1:
+        st.info("Ledger ready. The genesis block exists; no credential records have been added yet.")
+    else:
+        st.success("Ledger integrity check passed. All displayed block hashes and chain links match.")
+else:
+    st.error("Integrity failure detected. One or more block hashes or chain links do not match.")
 
-st.dataframe(
-    [
-        {
-            "Block": block.index,
-            "Student": block.certificate_data["student_name"],
-            "Roll number": block.certificate_data["roll_no"],
-            "Course": block.certificate_data["course"],
-            "CGPA": block.certificate_data["cgpa"],
-            "Status": "Tampered" if block.index in broken_blocks else "Valid",
-        }
-        for block in active_chain
-    ],
-    use_container_width=True,
-    hide_index=True,
-)
-
-st.subheader("Block details")
+st.subheader("Ledger explorer")
 for block in active_chain:
     tampered = block.index in broken_blocks
-    with st.expander(f"Block #{block.index} · {'Tampered' if tampered else 'Valid'}"):
-        st.caption(f"Timestamp: {block.timestamp} · Nonce: {block.nonce}")
-        st.code(
-            f"Previous hash: {block.previous_hash}\n"
-            f"Stored hash: {block.hash}\n"
-            f"Calculated hash: {block.calculate_hash()}",
-            language="text",
-        )
+    block_status = "🔴 COMPROMISED BLOCK" if tampered else "🟢 INTEGRITY CHECK PASSED"
+
+    with st.container(border=True):
+        col1, col2 = st.columns([1, 2])
+        with col1:
+            st.markdown(f"### Block #{block.index} ({block_status})")
+            st.write(f"**Student:** {block.certificate_data['student_name']}")
+            st.write(
+                f"**Roll number:** `{block.certificate_data['roll_no']}` "
+                f"| **Course:** {block.certificate_data['course']}"
+            )
+            st.write(f"**Recorded CGPA:** `{block.certificate_data['cgpa']}`")
+        with col2:
+            st.write(f"**Timestamp:** {block.timestamp} | **Proof-of-work nonce:** `{block.nonce}`")
+            st.code(
+                f"Previous hash : {block.previous_hash}\n"
+                f"Stored hash   : {block.hash}\n"
+                f"Actual hash   : {block.calculate_hash()}",
+                language="text",
+            )
