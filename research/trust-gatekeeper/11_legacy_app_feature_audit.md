@@ -98,11 +98,11 @@ The following must happen in order:
 - Do not import existing EACT modules merely because names sound similar.
 
 ### Phase C — Retire old active UI
-Only after the local `app.py` change is safely committed or backed up:
-- move the old ledger entrypoint to a clearly labelled legacy/archive location, or preserve it on the original main branch;
-- create the new Trust Gatekeeper entrypoint;
-- remove the five EACT pages from active Streamlit navigation while retaining their code/history in an archive;
-- remove dependencies only after a code/import/test scan proves they are no longer required by the new entrypoint.
+- [x] Move the five EACT pages out of active Streamlit navigation into `archive/legacy_eact_pages/`.
+- [ ] Safely inspect and back up the local `app.py` change before changing the legacy ledger entrypoint.
+- [ ] Move the old ledger entrypoint to a clearly labelled legacy/archive location, or preserve it on the original main branch.
+- [ ] Create the new Trust Gatekeeper entrypoint.
+- [ ] Remove dependencies only after a code/import/test scan proves they are no longer required by the new entrypoint.
 
 ### Phase D — Minimal vertical slice
 Build only one end-to-end synthetic case:
@@ -114,11 +114,21 @@ Build only one end-to-end synthetic case:
 
 Do not add live source fetching, production candidate data, cryptographic wallets or blockchain mechanics in this slice.
 
-## 6. Local working-copy safeguard
+## 6. Cleanup actions performed and local working-copy safeguard
 
-The screenshot supplied on 14 November 2026 showed `M app.py` after switching branches. This indicates a local modification not present in the GitHub remote branch at that time.
+### Completed on the research branch
+- All five legacy EACT Streamlit page files were copied byte-for-byte into `archive/legacy_eact_pages/`.
+- The five originals were removed from the active `pages/` directory, so they no longer appear in Streamlit's multipage navigation on this branch.
+- The archived code, original EACT backend modules, tests and protocol/results documents remain available for historical reproducibility.
+- The `main` branch was not changed.
 
-A remote replacement of `app.py` could conflict with that change or discard work during a later sync. Therefore this audit deliberately makes **no application-code deletion or replacement**. The current active UI remains unchanged until the local file is inspected, backed up and reconciled with the branch.
+### Pending: main `app.py` and legacy helper functions
+
+The screenshot supplied on 14 November 2026 showed `M app.py` after switching branches. This indicates a local modification not present in the GitHub remote branch at that time. The actual local file content is not available for inspection.
+
+The current remote `app.py` still contains the legacy ledger entrypoint, proof-of-work chain creation, manual credential issuance, import/reset controls, block explorer and simulated tampering controls. Those functions are marked for retirement from the future Trust Gatekeeper product, but are **not yet removed**.
+
+A remote replacement or deletion of `app.py` could conflict with the local modification or cause work to be lost. Therefore this audit makes **no change to `app.py` or its helper functions** until the local file is inspected and safely backed up. The current main screen remains a legacy ledger demonstration on this branch for now.
 
 ## 7. Cleanup acceptance criteria
 
