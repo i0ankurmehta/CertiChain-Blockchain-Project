@@ -166,6 +166,12 @@ class TestTrustGatekeeperRules(unittest.TestCase):
         self.assertEqual(result["primary_outcome"], EV03)
         self.assertIn(EV05, result["secondary_findings"])
 
+
+    def test_23_explicit_in_period_negative_status_is_temporal_mismatch(self):
+        case = base_case(); case["required_claims"] = [claim()]
+        case["evidence"] = [evidence(value="not_approved", explicitly_excludes_claim=True)]
+        self.assertEqual(assess_case(case)["primary_outcome"], EV02)
+
     def test_22_unverified_award_remains_insufficient_even_when_context_passes(self):
         result = assess_case(get_demo_case("Context supported, award unverified"))
         self.assertEqual(result["primary_outcome"], EV05)
