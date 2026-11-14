@@ -1,64 +1,46 @@
-# CertiChain — Trust Gatekeeper Research Branch
+# CertiChain — Trust Gatekeeper
 
-**Branch:** `research/trust-gatekeeper-foundation`  
-**Research status:** Rules and workflow specification; synthetic-only stage  
+**Research branch:** `research/trust-gatekeeper-foundation`  
 **Market under study:** Indian background-verification (BGV) providers  
-**Inputs under study:** Scanned academic documents and structured records  
-**Current data:** Synthetic fixtures only
+**Research data:** Synthetic fixtures only  
+**Current stage:** Deterministic rules engine and synthetic demonstration UI
 
-## What this branch is for
+## What this project does now
 
-This branch isolates the new CertiChain research direction: an explainable, temporal and provenance-aware evidence triage system for difficult education-verification cases.
+Trust Gatekeeper is an explainable analyst-assist research prototype. It evaluates scoped evidence claims about institutional relationships, programme status, historical periods, source conflicts and source lineage. It keeps individual award verification separate from institution/programme context.
 
-It is not intended to be another credential repository or blockchain ledger. The research asks whether representing institution/programme relationships with effective dates and source lineage can improve BGV analyst decisions and prevent unsupported conclusions.
+It is **not** a degree-issuing platform, credential repository, blockchain ledger, automated candidate rejection system or proof of fraud.
 
-## Important: application status
-
-The root `app.py` on this branch is still the legacy academic credential-ledger demonstration inherited from the original project. It has not yet been replaced because the local working copy showed an uncommitted change to `app.py`; that work must be inspected and preserved before the entrypoint is simplified.
-
-Therefore:
-- Running `streamlit run app.py` still opens the legacy ledger demo, **not** the new Trust Gatekeeper.
-- The five older EACT Streamlit pages have been removed from active navigation on this branch and preserved under `archive/legacy_eact_pages/`.
-- Their backend modules, tests and experiment records remain as historical research.
-- Do not treat the legacy ledger, proof-of-work, simulated tampering or SD-JWT experiments as active Trust Gatekeeper features.
-- The original `main` branch has not been changed.
-
-## Research documents
-
-The complete research pack is in [`research/trust-gatekeeper/`](research/trust-gatekeeper/README.md).
-
-Key documents:
-1. Problem definition
-2. Competitor and gap analysis
-3. Temporal provenance ontology
-4. Synthetic benchmark protocol
-5. First-stage research plan
-6. Operational standards
-7. Analyst case-handling checklist
-8. Worked affiliation-transition case
-9. Worked temporal-approval/source-dependency case
-10. Evidence adjudication and decision rules
-11. Legacy application feature audit and retirement plan
-
-## Current implementation boundary
-
-No production credential checks, real candidate personal data, live registry scraping, automatic adverse decisions or real-world accuracy claims are permitted in this research phase.
-
-The next implementation step is to translate `TG-RULES-001` into an independent deterministic Python module and tests, then evaluate it against the synthetic cases before creating the new Trust Gatekeeper UI.
-
-## Local setup
-
-The research branch can be checked out with:
+## Run locally
 
 ```bash
-git fetch origin
-git switch --track origin/research/trust-gatekeeper-foundation
+python3 -m pip install -r requirements.txt
+streamlit run app.py
 ```
 
-When already on this branch, update with:
+The active interface uses only synthetic fixtures. Do not enter or upload real candidate, student or institutional personal data.
+
+## Implemented in this branch
+
+- `tg_rules.py` — deterministic TG-RULES-001 evidence adjudication engine.
+- `tg_demo_cases.py` — fictional cases for historical programme approval, affiliation ambiguity and award-verification insufficiency.
+- `tests/test_tg_rules.py` — 22 unit tests covering intake, temporal reasoning, source dependencies, conflicts, mismatches and award-verification boundaries.
+- `research/trust-gatekeeper/` — problem definition, competitor gap, graph ontology, benchmark protocol, operational standards, analyst checklist, worked cases, adjudication rules and application audit.
+
+## Current UI limitations
+
+The Streamlit interface currently runs prebuilt synthetic cases and displays their findings. It does not yet implement actual PDF/image upload, OCR, CSV/JSON case intake, regulator-source ingestion, graph visualisation or issuer verification. These are later milestones and should be built only after the rule engine and benchmark are validated.
+
+## Tests
 
 ```bash
-git pull --ff-only
+python3 -m unittest discover -s tests -v
 ```
 
-Check `git status --short` before any destructive cleanup. Preserve any local modifications to `app.py`.
+Expected current result: **22 tests pass**.
+
+## Legacy experiments
+
+The previous blockchain-ledger and EACT/VC experiments are preserved under [`archive/`](archive/README.md). Their old pages are removed from active navigation, and their backend modules/tests are archived. They are not imported into the active Trust Gatekeeper application.
+
+The original `main` branch remains the legacy reference. The uploaded local `app.py` from the user's working copy differed slightly from remote `main`; preserve that local file separately before syncing this branch.
