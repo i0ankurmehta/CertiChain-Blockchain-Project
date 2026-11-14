@@ -1,11 +1,11 @@
 # CertiChain Trust Gatekeeper — Research Track
 
-**Track status:** Foundation v0.1 — problem and benchmark design only  
+**Track status:** Rules engine v0.1 and synthetic demonstration UI  
 **Date:** 14 November 2026  
 **Market under study:** Indian background-verification (BGV) providers  
 **Inputs:** Scanned academic documents and structured records  
 **Data:** Synthetic only  
-**Application status:** Existing Streamlit application is not modified by this track.
+**Application status:** Research-branch `app.py` now runs the synthetic Trust Gatekeeper interface; legacy code is archived.
 
 ## Research proposition
 
@@ -28,12 +28,14 @@ This is not another credential repository, issuing service, blockchain ledger, o
 | [09 — Worked temporal approval case](09_worked_synthetic_case_temporal_approval.md) | Later-session programme approval, current-status trap, source dependency and scoped abstention |
 | [10 — Evidence adjudication rules](10_evidence_adjudication_rules.md) | Deterministic scope-specific outcomes, temporal/source rules, precedence, abstention and unit-test requirements |
 | [11 — Legacy application feature audit](11_legacy_app_feature_audit.md) | Keep/archive/retire decisions for the old ledger and EACT experiments, with safe cleanup sequencing |
+| **Implementation** | `../../tg_rules.py`, `../../tg_demo_cases.py`, `../../tests/test_tg_rules.py` — deterministic assessment engine, synthetic fixtures and 22 tests |
 | [Legacy EACT page archive](../../archive/legacy_eact_pages/) | Five former Streamlit lab pages retained as source history and removed from active navigation on this branch |
 
 ## Decision record
 
-- Keep the current application and its main branch stable.
-- Do not add another Streamlit lab or alter existing EACT modules during this foundation phase.
+- Keep the original `main` branch stable.
+- The research branch now has a minimal Trust Gatekeeper interface and deterministic rule engine.
+- Old EACT pages, modules, tests and ledger fixtures are preserved under `archive/` rather than active runtime paths.
 - Keep research documents isolated under `research/trust-gatekeeper/`.
 - Revisit a separate GitHub repository once this track has an executable graph engine, benchmark generator, or independent dependency set. At that point, split this directory into a standalone repository rather than maintaining parallel codebases prematurely.
 
