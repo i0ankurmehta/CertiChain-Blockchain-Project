@@ -379,11 +379,6 @@ with st.sidebar:
                         st.session_state.imported_source_mode = data_source
                         st.error(f"Could not import file: {error}")
 
-        if (
-            st.session_state.imported_source_mode == data_source
-            and st.session_state.imported_chain is not None
-        ):
-
     elif data_source == "Online JSON":
         allowed_hosts = get_allowed_source_hosts()
         if not allowed_hosts:
@@ -418,8 +413,6 @@ with st.sidebar:
                 st.success(f"Fetched {len(records)} records.")
             except (ValueError, TypeError) as error:
                 st.error(f"Online import stopped: {error}")
-
-        if st.session_state.imported_source_mode == data_source and st.session_state.imported_chain is not None:
 
     st.divider()
 
