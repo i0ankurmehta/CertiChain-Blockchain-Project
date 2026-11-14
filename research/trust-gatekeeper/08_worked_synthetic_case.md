@@ -154,9 +154,9 @@ The analyst links:
 
 ### Primary outcome
 
-<badge color="warning">EV-05 — Evidence insufficient</badge>
+<badge color="warning">EV-03 — Entity ambiguity</badge>
 
-**Secondary observation:** EV-03 — Entity / awarding-authority ambiguity for the continuing cohort.
+**Secondary outcome:** EV-05 — Evidence insufficient for individual award verification.
 
 **Do not assign EV-02 temporal mismatch:** the two affiliation periods are sequential and can both be true. The missing fact is the treatment of continuing students and the awarding authority for this cohort, not necessarily a contradiction between the two dated orders.
 
@@ -191,7 +191,7 @@ A general institution-recognition page or a third-party directory is not enough 
 ## 7. Example analyst report
 
 **Case:** TG-DEMO-001  
-**Preliminary outcome:** Evidence insufficient (EV-05)  
+**Preliminary outcome:** Entity ambiguity (EV-03)  
 **Secondary outcome:** Evidence insufficient (EV-05) for individual award verification.
 
 **Finding:** The submitted scan and structured case record agree on the candidate's stated institution, college, programme and dates. The synthetic evidence set records Northbridge College as affiliated with Aster State University for sessions 2020–21 and 2021–22, and with Meridian University from session 2022–23. The provided later directory entry derives from the Meridian affiliation notification and is not independent corroboration.
@@ -211,7 +211,7 @@ The available evidence does not describe how students admitted under the earlier
 | Fields extracted | Extraction service | Extracted values, confidence and source-field mapping |
 | Sources linked | Analyst | SYN-E01 to SYN-E05 with scope, dates and source lineage |
 | Dependency recorded | Analyst | SYN-E03 derives from SYN-E02 |
-| Preliminary finding | Analyst | EV-05 primary, EV-03 secondary, with explanation |
+| Preliminary finding | Analyst | EV-03 primary, EV-05 secondary for the separate individual-award scope, with explanation |
 | Escalation prepared | Analyst | Cohort transition and awarding-authority questions |
 | Case state | System | Pending issuer/authority response; not closed as verified |
 
@@ -238,7 +238,7 @@ The prototype passes this case only if it:
 - [ ] records SYN-E03 as dependent on SYN-E02;
 - [ ] avoids treating matching scan/JSON fields as proof of authenticity;
 - [ ] returns EV-03 as the primary outcome, with EV-05 for the separate individual-award scope;
-- [ ] explains EV-03 as a secondary ambiguity;
+- [ ] explains EV-03 as the primary unresolved cohort/awarding-entity relationship and EV-05 as the separate missing individual-award evidence;
 - [ ] does not incorrectly return EV-02 or EV-04;
 - [ ] generates a specific escalation question;
 - [ ] avoids a fraud verdict.
