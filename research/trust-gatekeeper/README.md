@@ -25,6 +25,7 @@ This is not another credential repository, issuing service, blockchain ledger, o
 | [06 — Operational standards](06_operational_standards.md) | Case lifecycle, source classes, temporal checks, dispositions, escalation, privacy, security and release gates |
 | [07 — Analyst case-handling checklist](07_analyst_case_handling_checklist.md) | Practical case-by-case checklist aligned to the operational standard |
 | [08 — Worked synthetic case](08_worked_synthetic_case.md) | End-to-end affiliation transition example with evidence register, temporal analysis and escalation |
+| [09 — Worked temporal approval case](09_worked_synthetic_case_temporal_approval.md) | Later-session programme approval, current-status trap, source dependency and scoped abstention |
 
 ## Decision record
 
