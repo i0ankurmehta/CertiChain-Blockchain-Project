@@ -126,6 +126,8 @@ Do not add live source fetching, production candidate data, cryptographic wallet
 - The five EACT backend modules were copied to `archive/legacy_eact_modules/` and removed from the active import path.
 - The five EACT regression tests were copied to `archive/legacy_eact_tests/`; `tests/` now contains the new Trust Gatekeeper rules tests.
 - The old synthetic ledger dataset was preserved at `archive/legacy_ledger/data/synthetic_records.json`.
+- The original Colab ledger notebook and synthetic-mode README were moved into `archive/legacy_ledger/`.
+- The empty root `Streamlit_app` placeholder was removed.
 - The original remote `main` ledger entrypoint was preserved at `archive/legacy_ledger_app_main.py`.
 - The research branch root `app.py` is now the Trust Gatekeeper synthetic-case interface.
 - `requirements.txt` now lists only Streamlit for the active app.
