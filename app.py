@@ -383,7 +383,6 @@ with st.sidebar:
             st.session_state.imported_source_mode == data_source
             and st.session_state.imported_chain is not None
         ):
-            st.caption("Imported · not issuer-verified")
 
     elif data_source == "Online JSON":
         allowed_hosts = get_allowed_source_hosts()
@@ -421,7 +420,6 @@ with st.sidebar:
                 st.error(f"Online import stopped: {error}")
 
         if st.session_state.imported_source_mode == data_source and st.session_state.imported_chain is not None:
-            st.caption("Fetched · not issuer-verified")
 
     st.divider()
 
